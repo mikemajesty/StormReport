@@ -5,13 +5,12 @@ using System.Web.Mvc;
 using System.Drawing;
 using System.Web.UI;
 using System;
-using System.Data;
+using System.Reflection;
 
 namespace StormReport
 {
-    public class Program : Controller
+    public class Report : Controller
     {
-
         public void teste<T>(IList<T> list, List<ColumnConfig> config)
         {
             var excel = new System.Data.DataTable("teste");
@@ -20,7 +19,9 @@ namespace StormReport
             excel.Columns.Add("Descrição", typeof(string));
             excel.Columns.Add("Justificação", typeof(string));
 
-            for (int row = 0; row < list.Count; row++)
+            var filds = typeof(T).GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+
+            /*for (int row = 0; row < list.Count; row++)
             {
                 DataRow newrow = excel.NewRow();
                 newrow[excel.Columns["CPF/CNPJ"]] = list[row].CnpjCpf;
@@ -28,7 +29,7 @@ namespace StormReport
                 newrow[excel.Columns["Descrição"]] = list[row].Descricao;
                 newrow[excel.Columns["Justificação"]] = list[row].Justificacao;
                 excel.Rows.Add(newrow);
-            }
+            }*/
 
             var grid = new GridView();
             grid.DataSource = excel;
@@ -55,7 +56,5 @@ namespace StormReport
             public Type Type { get; set; }
             public List<TableItemStyle> Styles { get; set; }
         }
-
-
     }
 }
