@@ -13,28 +13,40 @@ namespace StormReport
 {
     public class Report
     {
-        public DataTable CreateExcelBase<T>(IList<T> listItems, HttpResponseBase Response = null)
+        public void CreateExcelBase<T>(IList<T> listItems, HttpResponseBase Response = null)
         {
             var excelExportable = new DataTable("ExportToExcelTable");
-
+            DataRow newrow = null;
             var properties = typeof(T).GetProperties().Where(f => ((ExportableNameAttribute)f.GetCustomAttributes(typeof(ExportableNameAttribute), true).FirstOrDefault()) != null);
-            var list = new List<Object>();
             foreach (PropertyInfo prop in properties)
             {
                 var name = ((ExportableNameAttribute)prop.GetCustomAttributes(typeof(ExportableNameAttribute), false).FirstOrDefault()).Description;
 
                 var propertiesValues = listItems.Select(o => prop.GetValue(o)).ToList();
                 excelExportable.Columns.Add(name, GetType(prop));
-              
+
+                if (newrow == null)
+                {
+                    propertiesValues.ForEach(r =>
+                    {
+                        newrow = excelExportable.NewRow();
+                        excelExportable.Rows.Add(newrow);
+                    });
+                }
+
                 for (int cont = 0; cont < propertiesValues.Count; cont++)
                 {
-                    DataRow newrow = excelExportable.NewRow();
                     newrow[excelExportable.Columns[name]] = propertiesValues[cont];
-                    excelExportable.Rows.Add(newrow);
+                    excelExportable.Rows[cont].ItemArray = newrow.ItemArray;
                 }
             }
 
             /*exportar excel*/
+
+            if (Response == null)
+            {
+                throw new ArgumentNullException("Response is Required");
+            }
 
             var grid = new GridView();
             grid.DataSource = excelExportable;
@@ -53,8 +65,6 @@ namespace StormReport
             Response.Output.Write(sw.ToString());
             Response.Flush();
             Response.End();
-
-            return excelExportable;
         }
 
         private static Type GetType(PropertyInfo p)

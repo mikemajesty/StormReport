@@ -10,53 +10,28 @@ namespace StormReport.Test
     [TestClass]
     public class ReportByTest
     {
-        [TestMethod]
-        public void TestMethod1()
+        private Report report;
+        public ReportByTest()
         {
-            Report e = new Report();
-            var d = new List<ColumnConfig>();
-            var d1 = new ColumnConfig { Name = "CPF/CNPJ", Type= typeof(double) };
-            d.Add(d1);
-            var d2 = new ColumnConfig { Name = "Data Cadastro", Type = typeof(string) };
-            d.Add(d2);
-            var d3 = new ColumnConfig { Name = "Descrição", Type = typeof(string) };
-            d.Add(d3);
-            var d4 = new ColumnConfig { Name = "Justificação", Type = typeof(string) };
-            d.Add(d4);
-
-            var r = new test { Cidade = "Ibiúna", Estado = "SP", Idade = 10, Nome = "Mike" };
-            var r2 = new test { Cidade = "Sorocaba", Estado = "SP", Idade = 28, Nome = "Mike Lima" };
-            var f = new List<test>();
-            f.Add(r);
-            f.Add(r2);
-            e.CreateExcelBase(f);
+            report = new Report();
         }
 
-        public class test
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ResponseIsNull()
         {
-            public List<test> List { get; set; }
+            List<ClassTest> list = GetList();
+            report.CreateExcelBase(list);
+        }
 
-            public test()
-            {
-                List = new List<test>();
-            }
-
-            [ExportableName("Nome do Cliente")]
-            public string Nome { get; set; }
-
-            [ExportableName("Idade do Cliente")]
-            public int Idade { get; set; }
-
-            [ExportableName("Cidade do Cliente")]
-            public string Cidade { get; set; }
-
-            [ExportableName("Estado do Cliente")]
-            public string Estado { get; set; }
-
-            public void Add(test e)
-            {
-                List.Add(e);
-            }
+        private static List<ClassTest> GetList()
+        {
+            var class1 = new ClassTest { Cidade = "Ibiúna", Estado = "SP", Idade = 10, Nome = "Mike" };
+            var class2 = new ClassTest { Cidade = "Sorocaba", Estado = "SP", Idade = 28, Nome = "Mike Lima" };
+            var list = new List<ClassTest>();
+            list.Add(class1);
+            list.Add(class2);
+            return list;
         }
     }
 }

@@ -80,6 +80,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ClassTest.cs" />
     <Compile Include="ReportByTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
