@@ -17,10 +17,10 @@ namespace StormReport
         {
             var excelExportable = new DataTable("ExportToExcelTable");
             DataRow newrow = null;
-            var properties = typeof(T).GetProperties().Where(f => ((ExportableNameAttribute)f.GetCustomAttributes(typeof(ExportableNameAttribute), true).FirstOrDefault()) != null);
+            var properties = typeof(T).GetProperties().Where(f => ((ExportableColumnNameAttribute)f.GetCustomAttributes(typeof(ExportableColumnNameAttribute), true).FirstOrDefault()) != null);
             foreach (PropertyInfo prop in properties)
             {
-                var name = ((ExportableNameAttribute)prop.GetCustomAttributes(typeof(ExportableNameAttribute), false).FirstOrDefault()).Description;
+                var name = ((ExportableColumnNameAttribute)prop.GetCustomAttributes(typeof(ExportableColumnNameAttribute), false).FirstOrDefault()).Description;
 
                 var propertiesValues = listItems.Select(o => prop.GetValue(o)).ToList();
                 excelExportable.Columns.Add(name, GetType(prop));

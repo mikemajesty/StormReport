@@ -1,17 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Web.UI.WebControls;
+﻿using System.Collections.Generic;
 
 namespace StormReport.Test
 {
-    public class ClassTest
+    public class ClassFinalTest
     {
-        private List<ClassTest> List { get; set; }
+        private List<ClassFinalTest> List { get; set; }
 
-        public ClassTest()
+        public ClassFinalTest()
         {
-            List = new List<ClassTest>();
+            List = new List<ClassFinalTest>();
         }
 
         [ExportableColumnName("Nome do Cliente")]
@@ -27,12 +24,12 @@ namespace StormReport.Test
         [ExportableColumnName("Estado do Cliente")]
         public string Estado { get; set; }
 
-        public void Add(ClassTest e)
+        public void Add(ClassFinalTest e)
         {
             List.Add(e);
         }
 
-        public List<ClassTest> GetList()
+        public List<ClassFinalTest> GetList()
         {
             return List;
         }

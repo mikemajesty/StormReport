@@ -80,7 +80,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExportableNameAttribute.cs" />
+    <Compile Include="ClassFinalTest.cs" />
+    <Compile Include="ExportableColumnNameAttribute.cs" />
+    <Compile Include="ExportableColumnStyleAttribute.cs" />
     <Compile Include="Report.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
