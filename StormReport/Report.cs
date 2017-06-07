@@ -1,53 +1,64 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Web.UI.WebControls;
-using System.Web.Mvc;
 using System.Drawing;
 using System.Web.UI;
 using System;
 using System.Reflection;
+using System.Linq;
+using System.Web;
+using System.Data;
 
 namespace StormReport
 {
-    public class Report : Controller
+    public class Report : HttpResponseBase
     {
-        public void teste<T>(IList<T> list, List<ColumnConfig> config)
+        public void ExportToExcel<T>(IList<T> list, List<ColumnConfig> config)
         {
-            var excel = new System.Data.DataTable("teste");
-            excel.Columns.Add("CPF/CNPJ", typeof(double));
-            excel.Columns.Add("Data Cadastro", typeof(string));
-            excel.Columns.Add("Descrição", typeof(string));
-            excel.Columns.Add("Justificação", typeof(string));
+            var excelExportable = new DataTable("ExportToExcelTable");
 
-            var filds = typeof(T).GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
-
-            /*for (int row = 0; row < list.Count; row++)
+            var properties = typeof(T).GetProperties().Where(f => ((ExportableNameAttribute)f.GetCustomAttributes(typeof(ExportableNameAttribute), true).FirstOrDefault()) != null);
+            foreach (PropertyInfo prop in properties)
             {
-                DataRow newrow = excel.NewRow();
-                newrow[excel.Columns["CPF/CNPJ"]] = list[row].CnpjCpf;
-                newrow[excel.Columns["Data Cadastro"]] = list[row].DataCadastro;
-                newrow[excel.Columns["Descrição"]] = list[row].Descricao;
-                newrow[excel.Columns["Justificação"]] = list[row].Justificacao;
-                excel.Rows.Add(newrow);
-            }*/
+                var name = ((ExportableNameAttribute)prop.GetCustomAttributes(typeof(ExportableNameAttribute), false).FirstOrDefault()).Description;
+                var propertiesValues = list.Select(o => prop.GetValue(o)).ToList();
+
+                excelExportable.Columns.Add(name, GetType(prop));
+               
+                for (int cont = 0; cont < propertiesValues.Count; cont++)
+                {
+                    DataRow newrow = excelExportable.NewRow();
+                    newrow[excelExportable.Columns[name]] = propertiesValues[cont];
+                    excelExportable.Rows.Add(newrow);
+                }
+            }
 
             var grid = new GridView();
-            grid.DataSource = excel;
+            grid.DataSource = excelExportable;
             grid.DataBind();
             grid.HeaderStyle.BackColor = Color.FromArgb(95, 136, 164);
-            Response.ClearContent();
-            Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment; filename=ClientePerfil.xls");
-            Response.ContentType = "application/ms-excel";
+            this.ClearContent();
+            this.Buffer = true;
+            this.AddHeader("content-disposition", "attachment; filename=ClientePerfil.xls");
+            this.ContentType = "application/ms-excel";
 
-            Response.Charset = "utf-8";
+            this.Charset = "utf-8";
             StringWriter sw = new StringWriter();
             HtmlTextWriter htw = new HtmlTextWriter(sw);
             grid.RenderControl(htw);
 
-            Response.Output.Write(sw.ToString());
-            Response.Flush();
-            Response.End();
+            this.Output.Write(sw.ToString());
+            this.Flush();
+            this.End();
+        }
+
+        private static Type GetType(PropertyInfo p)
+        {
+            if (p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                return (p.PropertyType.GetGenericArguments()[0]).GetType();
+            }
+            return p.PropertyType;
         }
 
         public class ColumnConfig
