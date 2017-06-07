@@ -8,7 +8,7 @@ namespace StormReport
 
         public ExportableNameAttribute(string desc)
         {
-            this.Description = desc;
+            this.Description = string.IsNullOrEmpty(desc) ? "Unknown name" : desc;
         }
     }
 }

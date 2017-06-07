@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Collections;
 using static StormReport.Report;
+using System.Web.Mvc;
 
 namespace StormReport.Test
 {
@@ -28,7 +29,7 @@ namespace StormReport.Test
             var f = new List<test>();
             f.Add(r);
             f.Add(r2);
-            e.ExportToExcel(f, d);
+            e.CreateExcelBase(f);
         }
 
         public class test

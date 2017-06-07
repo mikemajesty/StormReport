@@ -11,20 +11,21 @@ using System.Data;
 
 namespace StormReport
 {
-    public class Report : HttpResponseBase
+    public class Report
     {
-        public void ExportToExcel<T>(IList<T> list, List<ColumnConfig> config)
+        public DataTable CreateExcelBase<T>(IList<T> listItems, HttpResponseBase Response = null)
         {
             var excelExportable = new DataTable("ExportToExcelTable");
 
             var properties = typeof(T).GetProperties().Where(f => ((ExportableNameAttribute)f.GetCustomAttributes(typeof(ExportableNameAttribute), true).FirstOrDefault()) != null);
+            var list = new List<Object>();
             foreach (PropertyInfo prop in properties)
             {
                 var name = ((ExportableNameAttribute)prop.GetCustomAttributes(typeof(ExportableNameAttribute), false).FirstOrDefault()).Description;
-                var propertiesValues = list.Select(o => prop.GetValue(o)).ToList();
 
+                var propertiesValues = listItems.Select(o => prop.GetValue(o)).ToList();
                 excelExportable.Columns.Add(name, GetType(prop));
-               
+              
                 for (int cont = 0; cont < propertiesValues.Count; cont++)
                 {
                     DataRow newrow = excelExportable.NewRow();
@@ -33,23 +34,27 @@ namespace StormReport
                 }
             }
 
+            /*exportar excel*/
+
             var grid = new GridView();
             grid.DataSource = excelExportable;
             grid.DataBind();
             grid.HeaderStyle.BackColor = Color.FromArgb(95, 136, 164);
-            this.ClearContent();
-            this.Buffer = true;
-            this.AddHeader("content-disposition", "attachment; filename=ClientePerfil.xls");
-            this.ContentType = "application/ms-excel";
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=ClientePerfil.xls");
+            Response.ContentType = "application/ms-excel";
 
-            this.Charset = "utf-8";
+            Response.Charset = "utf-8";
             StringWriter sw = new StringWriter();
             HtmlTextWriter htw = new HtmlTextWriter(sw);
             grid.RenderControl(htw);
 
-            this.Output.Write(sw.ToString());
-            this.Flush();
-            this.End();
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+
+            return excelExportable;
         }
 
         private static Type GetType(PropertyInfo p)
