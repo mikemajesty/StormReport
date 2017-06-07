@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Collections;
-using static StormReport.Report;
-using System.Web.Mvc;
+using System.Web;
+using Moq;
+using System.IO;
 
 namespace StormReport.Test
 {
@@ -22,6 +22,18 @@ namespace StormReport.Test
         {
             List<ClassTest> list = GetList();
             report.CreateExcelBase(list);
+        }
+
+        [TestMethod]
+        public void teste()
+        {
+            var response = Mock.Of<HttpResponseBase>();
+
+            var textWriter = Mock.Of<TextWriter>();
+            response.Output = textWriter;
+
+            List<ClassTest> list = GetList();
+            report.CreateExcelBase(list, response);
         }
 
         private static List<ClassTest> GetList()

@@ -41,8 +41,6 @@ namespace StormReport
                 }
             }
 
-            /*exportar excel*/
-
             if (Response == null)
             {
                 throw new ArgumentNullException("Response is Required");
@@ -74,13 +72,6 @@ namespace StormReport
                 return (p.PropertyType.GetGenericArguments()[0]).GetType();
             }
             return p.PropertyType;
-        }
-
-        public class ColumnConfig
-        {
-            public string Name { get; set; }
-            public Type Type { get; set; }
-            public List<TableItemStyle> Styles { get; set; }
         }
     }
 }
