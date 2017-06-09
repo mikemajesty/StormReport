@@ -4,11 +4,12 @@ using System.Web.UI.WebControls;
 
 namespace StormReport
 {
+    [AttributeUsage(AttributeTargets.Property)]
     public class ExportableColumnStyleAttribute : Attribute
     {
-        public TableItemStyle Styles { get; set; }
+        public string[] Styles { get; set; }
 
-        public ExportableColumnStyleAttribute(TableItemStyle styles)
+        public ExportableColumnStyleAttribute(params string[] styles)
         {
             this.Styles = styles;
         }

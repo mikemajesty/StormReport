@@ -1,18 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Web.UI.WebControls;
 
 namespace StormReport.Test
 {
     public class ClassFinalTest
     {
-        private List<ClassFinalTest> List { get; set; }
+        private static Style a1;
+        private static Style a2;
+        private List<ClassFinalTest> List;
+        private List<Style> style;
 
         public ClassFinalTest()
         {
             List = new List<ClassFinalTest>();
         }
-
+  
         [ExportableColumnName("Nome do Cliente")]
-        [ExportableColumnStyle(null)]
+        [ExportableColumnStyle("text-align: center;", "  color: red;", "font-size: 17px;")]
         public string Nome { get; set; }
 
         [ExportableColumnName("Idade do Cliente")]

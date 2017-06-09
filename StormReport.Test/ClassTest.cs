@@ -15,7 +15,6 @@ namespace StormReport.Test
         }
 
         [ExportableColumnName("Nome do Cliente")]
-        [ExportableColumnStyle(null)]
         public string Nome { get; set; }
 
         [ExportableColumnName("Idade do Cliente")]

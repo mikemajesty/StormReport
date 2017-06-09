@@ -73,5 +73,21 @@ namespace StormReport
             }
             return p.PropertyType;
         }
+
+        public static string Gettable()
+        {
+            var table = @"<div>
+	                        <table cellspacing='0' rules='all' border='1'>
+		                        <tr style='background-color:#5F88A4;'>
+			                        <th scope='col'>Nome do Cliente</th><th scope='col'>Idade do Cliente</th><th scope='col'>Cidade do Cliente</th><th scope='col'>Estado do Cliente</th>
+		                        </tr><tr>
+			                        <td>Mike Lima</td><td>28</td><td>Sorocaba</td><td>SP</td>
+		                        </tr><tr>
+			                        <td>Mike Lima</td><td>28</td><td>Sorocaba</td><td>SP</td>
+		                        </tr>
+	                        </table>
+                        </div>";
+            return table;
+        }
     }
 }

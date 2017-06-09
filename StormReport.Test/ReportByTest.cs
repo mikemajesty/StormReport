@@ -25,7 +25,7 @@ namespace StormReport.Test
         }
 
         [TestMethod]
-        public void teste()
+        public void GenerateReport()
         {
             var response = Mock.Of<HttpResponseBase>();
 
