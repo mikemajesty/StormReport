@@ -4,6 +4,7 @@ using System.Web.UI.WebControls;
 
 namespace StormReport
 {
+    [AttributeUsage(AttributeTargets.Property)]
     public class ExportableColumnNameAttribute : Attribute
     {
         public string Description { get; set; }

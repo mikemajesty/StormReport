@@ -1,17 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Web.UI.WebControls;
-using System.Drawing;
-using System.Web.UI;
 using System;
 using System.Reflection;
 using System.Linq;
 using System.Web;
 using System.Data;
 using System.Text;
-using System.Web.UI.HtmlControls;
-using System.Diagnostics;
-using System.Collections;
 
 namespace StormReport
 {
@@ -68,7 +62,7 @@ namespace StormReport
 
             Response.Charset = "utf-8";
            
-            Response.Output.Write(builder.ToString());
+            Response.Output.Write(Gettable());
             Response.Flush();
             Response.End();
         }
@@ -89,9 +83,15 @@ namespace StormReport
 		                        <tr style='background-color:#5F88A4;'>
 			                        <th scope='col'>Nome do Cliente</th><th scope='col'>Idade do Cliente</th><th scope='col'>Cidade do Cliente</th><th scope='col'>Estado do Cliente</th>
 		                        </tr><tr>
-			                        <td>Mike Lima</td><td>28</td><td>Sorocaba</td><td>SP</td>
-		                        </tr><tr>
-			                        <td>Mike Lima</td><td>28</td><td>Sorocaba</td><td>SP</td>
+			                        <td>Mike Lima</td>
+                                    <td style=mso-number-format:'0\.000'>2800</td>
+                                    <td>Sorocaba</td>
+                                    <td>SP</td>
+                                </tr><tr>
+			                        <td>Mike Lima</td>
+                                    <td style=mso-number-format:'mm\\/dd\\/yyyy'>06-10-2017 00-00-00</td>
+                                    <td style=mso-number-format:'General'>Sorocaba</td>
+                                    <td>SP</td>
 		                        </tr>
 	                        </table>
                         </div>";
