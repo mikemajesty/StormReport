@@ -29,6 +29,11 @@ namespace StormReport
             }
             builder.Append("</tr>\n");
 
+            if (listItems == null)
+            {
+                throw new ArgumentNullException("List cannot be null Required");
+            }
+
             foreach (var row in listItems.Select(o => new { Properties = properties.Select(g => g), Value = o }).ToList())
             {
                 builder.Append("<tr>\n");
@@ -41,6 +46,7 @@ namespace StormReport
                 }
                 builder.Append("</tr>\n");
             }
+
             builder.Append("</table>");
 
             if (Response == null)
@@ -55,7 +61,7 @@ namespace StormReport
 
             Response.Charset = "utf-8";
 
-            Response.Output.Write(GetTable());
+            Response.Output.Write(builder.ToString());
             Response.Flush();
             Response.End();
         }

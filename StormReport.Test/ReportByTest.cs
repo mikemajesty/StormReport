@@ -11,9 +11,15 @@ namespace StormReport.Test
     public class ReportByTest
     {
         private Report report;
+        private HttpResponseBase response;
+
         public ReportByTest()
         {
             report = new Report();
+            response = Mock.Of<HttpResponseBase>();
+
+            var textWriter = Mock.Of<TextWriter>();
+            response.Output = textWriter;
         }
 
         [TestMethod]
@@ -27,12 +33,21 @@ namespace StormReport.Test
         [TestMethod]
         public void GenerateReport()
         {
-            var response = Mock.Of<HttpResponseBase>();
-
-            var textWriter = Mock.Of<TextWriter>();
-            response.Output = textWriter;
-
             List<ClassTest> list = GetList();
+            report.CreateExcelBase(list, response);
+        }
+
+        [TestMethod]
+        public void GenerateEmptyExcelRow()
+        {
+            report.CreateExcelBase(new List<ClassTest>(), response);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GenerateNullListObject()
+        {
+            List<ClassTest> list = null;
             report.CreateExcelBase(list, response);
         }
 
