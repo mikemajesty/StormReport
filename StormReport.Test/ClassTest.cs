@@ -2,7 +2,7 @@
 
 namespace StormReport.Test
 {
-    [ExcelFileName("ExcelReport")]
+    [ExcelFileName("ExcelReport", useDateTimeToAdditionalName: true)]
     public class ClassTest
     {
         private List<ClassTest> List { get; set; }

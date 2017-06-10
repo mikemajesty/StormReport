@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StormReport.Test
 {
-    [ExcelFileName("ExcelReport")]
+    [ExcelFileName("ExcelReport", useDateTimeToAdditionalName: true)]
     public class ClassFinalTest
     {
         private List<ClassFinalTest> List;

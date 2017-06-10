@@ -8,11 +8,14 @@ namespace StormReport
 
         public ExcelFileNameAttribute(string name, ExcelExtensionEnum excelEnum = ExcelExtensionEnum.XLS, bool useDateTimeToAdditionalName = false)
         {
-            Name = string.Format("{0}.{1}", name, GetEnumText(excelEnum));
+            Name = string.Format("{0}", name);
+
             if (useDateTimeToAdditionalName)
             {
                 Name += "-" + DateTime.Now;
             }
+
+            Name += "." + GetEnumText(excelEnum);
         }
 
         private static string GetEnumText(ExcelExtensionEnum excelEnum)
