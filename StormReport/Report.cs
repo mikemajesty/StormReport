@@ -24,15 +24,14 @@ namespace StormReport
             var list = new List<Table>();
 
             StringBuilder builder = new StringBuilder();
-            builder.Append("<table>\n");
+            builder.Append("<table cellspacing='0' rules='all' border='1'>\n");
             builder.Append("<tr>\n");
-
             foreach (var headerCell in properties)
             {
-                builder.Append("<th>\n");
+                builder.Append("<th scope='col'>\n");
                 var headerText = ((ExportableColumnNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnNameAttribute), false).FirstOrDefault()).Description;
                 builder.Append(headerText);
-                builder.Append("<th>\n");
+                builder.Append("</th>\n");
             }
             builder.Append("</tr>\n");
 
@@ -42,13 +41,14 @@ namespace StormReport
                 foreach (PropertyInfo cell in row.Properties)
                 {
                     var cellValue = row.Properties.Select(g => cell.GetValue(row.Value)).FirstOrDefault();
-                    builder.Append("<td>\n");
+                    builder.Append("<td scope='row'>\n");
                     builder.Append(cellValue);
                     builder.Append("</td>\n");
                 }
-                builder.Append("<tr>\n");
+                builder.Append("</tr>\n");
             }
             builder.Append("</table>");
+
             /*HtmlTable ht = new HtmlTable();
             HtmlTableRow htColumnsRow = new HtmlTableRow();
             HtmlTableCell htCell = new HtmlTableCell();
@@ -67,19 +67,10 @@ namespace StormReport
             Response.ContentType = "application/ms-excel";
 
             Response.Charset = "utf-8";
-            StringWriter sw = new StringWriter();
-            HtmlTextWriter htw = new HtmlTextWriter(sw);
-
-            Response.Output.Write(sw.ToString());
+           
+            Response.Output.Write(builder.ToString());
             Response.Flush();
             Response.End();
-        }
-
-        public class Table
-        {
-            public string Header { get; set; }
-
-            public string Value { get; set; }
         }
 
         private static Type GetType(PropertyInfo p)
@@ -105,62 +96,6 @@ namespace StormReport
 	                        </table>
                         </div>";
             return table;
-        }
-
-        public static string GetTableStructure(List<Table> tableList)
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("<table>");
-
-            builder.Append("<tr>");
-
-            builder.Append("<th>");
-
-            builder.Append("</th>");
-
-            builder.Append("</tr>");
-
-            builder.Append("<tr>");
-
-            tableList.ForEach(c =>
-            {
-                builder.Append("<td>");
-                builder.Append(c.Value);
-                builder.Append("</td>");
-            });
-
-            builder.Append("<tr>");
-
-            builder.Append("</table>");
-
-            return builder.ToString();
-        }
-
-        public HtmlTable BuildTable<T>(List<T> Data)
-        {
-            HtmlTable ht = new HtmlTable();
-            //Get the columns
-            HtmlTableRow htColumnsRow = new HtmlTableRow();
-            typeof(T).GetProperties().Select(prop =>
-            {
-                HtmlTableCell htCell = new HtmlTableCell();
-                htCell.InnerText = prop.Name;
-                return htCell;
-            }).ToList().ForEach(cell => htColumnsRow.Cells.Add(cell));
-            ht.Rows.Add(htColumnsRow);
-            //Get the remaining rows
-            Data.ForEach(delegate (T obj)
-            {
-                HtmlTableRow htRow = new HtmlTableRow();
-                obj.GetType().GetProperties().ToList().ForEach(delegate (PropertyInfo prop)
-                {
-                    HtmlTableCell htCell = new HtmlTableCell();
-                    htCell.InnerText = prop.GetValue(obj, null).ToString();
-                    htRow.Cells.Add(htCell);
-                });
-                ht.Rows.Add(htRow);
-            });
-            return ht;
         }
     }
 }
