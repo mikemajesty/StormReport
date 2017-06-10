@@ -30,13 +30,15 @@ namespace StormReport
 
             HtmlTable ht = new HtmlTable();
 
-            foreach (IEnumerable row in listItems.Select(o => properties.Select(g => g.GetValue(o))).ToList())
+            foreach (var row in listItems.Select(o => new { Properties = properties.Select(g => g), Value = o } ).ToList())
             {
                 Debug.WriteLine("<tr>");
-                foreach (var cell in row)
+                foreach (PropertyInfo cell in row.Properties)
                 {
+                    var name = ((ExportableColumnNameAttribute)cell.GetCustomAttributes(typeof(ExportableColumnNameAttribute), false).FirstOrDefault()).Description;
+                    var cellValue = row.Properties.Select(g => cell.GetValue(row.Value)).FirstOrDefault();
                     Debug.WriteLine("<td>");
-                    Debug.WriteLine(cell);
+                    Debug.WriteLine(cellValue);
                     Debug.WriteLine("</td>");
                 }
                 Debug.WriteLine("</tr>");
