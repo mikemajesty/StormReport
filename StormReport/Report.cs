@@ -24,26 +24,31 @@ namespace StormReport
             var list = new List<Table>();
 
             StringBuilder builder = new StringBuilder();
-            builder.Append("<table>");
-            builder.Append("<tr>");
-            builder.Append("</tr>");
+            builder.Append("<table>\n");
+            builder.Append("<tr>\n");
 
-            HtmlTable ht = new HtmlTable();
+            foreach (var headerCell in properties)
+            {
+                builder.Append("<th>\n");
+                var headerText = ((ExportableColumnNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnNameAttribute), false).FirstOrDefault()).Description;
+                builder.Append(headerText);
+                builder.Append("<th>\n");
+            }
+            builder.Append("</tr>\n");
 
             foreach (var row in listItems.Select(o => new { Properties = properties.Select(g => g), Value = o } ).ToList())
             {
-                Debug.WriteLine("<tr>");
+                builder.Append("<tr>\n");
                 foreach (PropertyInfo cell in row.Properties)
                 {
-                    var name = ((ExportableColumnNameAttribute)cell.GetCustomAttributes(typeof(ExportableColumnNameAttribute), false).FirstOrDefault()).Description;
                     var cellValue = row.Properties.Select(g => cell.GetValue(row.Value)).FirstOrDefault();
-                    Debug.WriteLine("<td>");
-                    Debug.WriteLine(cellValue);
-                    Debug.WriteLine("</td>");
+                    builder.Append("<td>\n");
+                    builder.Append(cellValue);
+                    builder.Append("</td>\n");
                 }
-                Debug.WriteLine("</tr>");
+                builder.Append("<tr>\n");
             }
-
+            builder.Append("</table>");
             /*HtmlTable ht = new HtmlTable();
             HtmlTableRow htColumnsRow = new HtmlTableRow();
             HtmlTableCell htCell = new HtmlTableCell();
