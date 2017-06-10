@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Web.UI.WebControls;
+﻿using System.Collections.Generic;
 
 namespace StormReport.Test
 {
+    [ExcelFileName("ExcelReport")]
     public class ClassTest
     {
         private List<ClassTest> List { get; set; }

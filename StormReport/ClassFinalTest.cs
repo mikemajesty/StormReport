@@ -1,15 +1,12 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Web.UI.WebControls;
 
 namespace StormReport.Test
 {
+    [ExcelFileName("ExcelReport")]
     public class ClassFinalTest
     {
-        private static Style a1;
-        private static Style a2;
         private List<ClassFinalTest> List;
-        private List<Style> style;
 
         public ClassFinalTest()
         {
@@ -17,7 +14,7 @@ namespace StormReport.Test
         }
   
         [ExportableColumnName("Nome do Cliente")]
-        [ExportableColumnStyle("text-align: center;", "  color: red;", "font-size: 17px;")]
+        [ExportableColumnStyle("text-align: center;", "color: red;", "font-size: 17px;")]
         public string Nome { get; set; }
 
         [ExportableColumnName("Idade do Cliente")]

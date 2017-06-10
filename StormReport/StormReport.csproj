@@ -81,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassFinalTest.cs" />
+    <Compile Include="ExcelExtensionEnum.cs" />
+    <Compile Include="ExcelFileNameAttribute.cs" />
     <Compile Include="ExportableColumnNameAttribute.cs" />
     <Compile Include="ExportableColumnStyleAttribute.cs" />
     <Compile Include="Report.cs" />

@@ -15,6 +15,15 @@ namespace StormReport
         {
             var properties = typeof(T).GetProperties().Where(f => ((ExportableColumnNameAttribute)f.GetCustomAttributes(typeof(ExportableColumnNameAttribute), true).FirstOrDefault()) != null);
 
+            var propExcelName  = typeof(T).GetCustomAttributes(typeof(ExcelFileNameAttribute), true).FirstOrDefault();
+
+            if (propExcelName == null)
+            {
+                throw new ArgumentNullException("Annotation ExcelFileName is Required.");
+            }
+
+            var excelName = ((ExcelFileNameAttribute)propExcelName).Name;
+
             var list = new List<Table>();
 
             StringBuilder builder = new StringBuilder();
@@ -31,7 +40,7 @@ namespace StormReport
 
             if (listItems == null)
             {
-                throw new ArgumentNullException("List cannot be null Required");
+                throw new ArgumentNullException("List cannot be null.");
             }
 
             foreach (var row in listItems.Select(o => new { Properties = properties.Select(g => g), Value = o }).ToList())
@@ -51,12 +60,12 @@ namespace StormReport
 
             if (Response == null)
             {
-                throw new ArgumentNullException("Response is Required");
+                throw new ArgumentNullException("Response is Required.");
             }
 
             Response.ClearContent();
             Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment; filename=ClientePerfil.xls");
+            Response.AddHeader("content-disposition", "attachment; filename="+ excelName);
             Response.ContentType = "application/ms-excel";
 
             Response.Charset = "utf-8";
@@ -80,7 +89,10 @@ namespace StormReport
             var table = @"<div>
 	                        <table cellspacing='0' rules='all' border='1'>
 		                        <tr style='background-color:#5F88A4;'>
-			                        <th scope='col'>Nome do Cliente</th><th scope='col'>Idade do Cliente</th><th scope='col'>Cidade do Cliente</th><th scope='col'>Estado do Cliente</th>
+			                        <th scope='col'>Nome do Cliente</th>
+                                    <th scope='col'>Idade do Cliente</th>
+                                    <th scope='col'>Cidade do Cliente</th>
+                                    <th scope='col'>Estado do Cliente</th>
 		                        </tr><tr>
 			                        <td>Mike Lima</td>
                                     <td style=mso-number-format:'0\.000'>2800</td>
@@ -95,15 +107,6 @@ namespace StormReport
 	                        </table>
                         </div>";
             return table;
-        }
-        public void CreateTagHtmlTable()
-        {
-            /*HtmlTable ht = new HtmlTable();
-            HtmlTableRow htColumnsRow = new HtmlTableRow();
-            HtmlTableCell htCell = new HtmlTableCell();
-            htCell.InnerText = prop.Name;
-            htColumnsRow.Cells.Add(cell))
-            ht.Rows.Add(htColumnsRow);*/
         }
     }
 }
