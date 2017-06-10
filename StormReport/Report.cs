@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Linq;
 using System.Web;
 using System.Data;
+using System.Text;
 
 namespace StormReport
 {
@@ -88,6 +89,30 @@ namespace StormReport
 	                        </table>
                         </div>";
             return table;
+        }
+
+        public static string GetTableStructure()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<table>");
+
+            builder.Append("<tr>");
+
+            builder.Append("<th>");
+            builder.Append("</th>");
+
+            builder.Append("</tr>");
+
+            builder.Append("<tr>");
+
+            builder.Append("<td>");
+            builder.Append("</td>");
+
+            builder.Append("<tr>");
+
+            builder.Append("</table>");
+
+            return builder.ToString();
         }
     }
 }
