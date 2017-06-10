@@ -29,7 +29,7 @@ namespace StormReport
             }
             builder.Append("</tr>\n");
 
-            foreach (var row in listItems.Select(o => new { Properties = properties.Select(g => g), Value = o } ).ToList())
+            foreach (var row in listItems.Select(o => new { Properties = properties.Select(g => g), Value = o }).ToList())
             {
                 builder.Append("<tr>\n");
                 foreach (PropertyInfo cell in row.Properties)
@@ -43,13 +43,6 @@ namespace StormReport
             }
             builder.Append("</table>");
 
-            /*HtmlTable ht = new HtmlTable();
-            HtmlTableRow htColumnsRow = new HtmlTableRow();
-            HtmlTableCell htCell = new HtmlTableCell();
-            htCell.InnerText = prop.Name;
-            htColumnsRow.Cells.Add(cell))
-            ht.Rows.Add(htColumnsRow);*/
-
             if (Response == null)
             {
                 throw new ArgumentNullException("Response is Required");
@@ -61,8 +54,8 @@ namespace StormReport
             Response.ContentType = "application/ms-excel";
 
             Response.Charset = "utf-8";
-           
-            Response.Output.Write(Gettable());
+
+            Response.Output.Write(GetTable());
             Response.Flush();
             Response.End();
         }
@@ -76,7 +69,7 @@ namespace StormReport
             return p.PropertyType;
         }
 
-        public static string Gettable()
+        public static string GetTable()
         {
             var table = @"<div>
 	                        <table cellspacing='0' rules='all' border='1'>
@@ -96,6 +89,15 @@ namespace StormReport
 	                        </table>
                         </div>";
             return table;
+        }
+        public void CreateTagHtmlTable()
+        {
+            /*HtmlTable ht = new HtmlTable();
+            HtmlTableRow htColumnsRow = new HtmlTableRow();
+            HtmlTableCell htCell = new HtmlTableCell();
+            htCell.InnerText = prop.Name;
+            htColumnsRow.Cells.Add(cell))
+            ht.Rows.Add(htColumnsRow);*/
         }
     }
 }
