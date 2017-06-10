@@ -9,6 +9,9 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Text;
+using System.Web.UI.HtmlControls;
+using System.Diagnostics;
+using System.Collections;
 
 namespace StormReport
 {
@@ -16,41 +19,41 @@ namespace StormReport
     {
         public void CreateExcelBase<T>(IList<T> listItems, HttpResponseBase Response = null)
         {
-            var excelExportable = new DataTable("ExportToExcelTable");
-            DataRow newrow = null;
             var properties = typeof(T).GetProperties().Where(f => ((ExportableColumnNameAttribute)f.GetCustomAttributes(typeof(ExportableColumnNameAttribute), true).FirstOrDefault()) != null);
-            foreach (PropertyInfo prop in properties)
+
+            var list = new List<Table>();
+
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<table>");
+            builder.Append("<tr>");
+            builder.Append("</tr>");
+
+            HtmlTable ht = new HtmlTable();
+
+            foreach (IEnumerable row in listItems.Select(o => properties.Select(g => g.GetValue(o))).ToList())
             {
-                var name = ((ExportableColumnNameAttribute)prop.GetCustomAttributes(typeof(ExportableColumnNameAttribute), false).FirstOrDefault()).Description;
-
-                var propertiesValues = listItems.Select(o => prop.GetValue(o)).ToList();
-                excelExportable.Columns.Add(name, GetType(prop));
-
-                if (newrow == null)
+                Debug.WriteLine("<tr>");
+                foreach (var cell in row)
                 {
-                    propertiesValues.ForEach(r =>
-                    {
-                        newrow = excelExportable.NewRow();
-                        excelExportable.Rows.Add(newrow);
-                    });
+                    Debug.WriteLine("<td>");
+                    Debug.WriteLine(cell);
+                    Debug.WriteLine("</td>");
                 }
-
-                for (int cont = 0; cont < propertiesValues.Count; cont++)
-                {
-                    newrow[excelExportable.Columns[name]] = propertiesValues[cont];
-                    excelExportable.Rows[cont].ItemArray = newrow.ItemArray;
-                }
+                Debug.WriteLine("</tr>");
             }
+
+            /*HtmlTable ht = new HtmlTable();
+            HtmlTableRow htColumnsRow = new HtmlTableRow();
+            HtmlTableCell htCell = new HtmlTableCell();
+            htCell.InnerText = prop.Name;
+            htColumnsRow.Cells.Add(cell))
+            ht.Rows.Add(htColumnsRow);*/
 
             if (Response == null)
             {
                 throw new ArgumentNullException("Response is Required");
             }
 
-            var grid = new GridView();
-            grid.DataSource = excelExportable;
-            grid.DataBind();
-            grid.HeaderStyle.BackColor = Color.FromArgb(95, 136, 164);
             Response.ClearContent();
             Response.Buffer = true;
             Response.AddHeader("content-disposition", "attachment; filename=ClientePerfil.xls");
@@ -59,11 +62,17 @@ namespace StormReport
             Response.Charset = "utf-8";
             StringWriter sw = new StringWriter();
             HtmlTextWriter htw = new HtmlTextWriter(sw);
-            grid.RenderControl(htw);
 
             Response.Output.Write(sw.ToString());
             Response.Flush();
             Response.End();
+        }
+
+        public class Table
+        {
+            public string Header { get; set; }
+
+            public string Value { get; set; }
         }
 
         private static Type GetType(PropertyInfo p)
@@ -91,7 +100,7 @@ namespace StormReport
             return table;
         }
 
-        public static string GetTableStructure()
+        public static string GetTableStructure(List<Table> tableList)
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("<table>");
@@ -99,20 +108,52 @@ namespace StormReport
             builder.Append("<tr>");
 
             builder.Append("<th>");
+
             builder.Append("</th>");
 
             builder.Append("</tr>");
 
             builder.Append("<tr>");
 
-            builder.Append("<td>");
-            builder.Append("</td>");
+            tableList.ForEach(c =>
+            {
+                builder.Append("<td>");
+                builder.Append(c.Value);
+                builder.Append("</td>");
+            });
 
             builder.Append("<tr>");
 
             builder.Append("</table>");
 
             return builder.ToString();
+        }
+
+        public HtmlTable BuildTable<T>(List<T> Data)
+        {
+            HtmlTable ht = new HtmlTable();
+            //Get the columns
+            HtmlTableRow htColumnsRow = new HtmlTableRow();
+            typeof(T).GetProperties().Select(prop =>
+            {
+                HtmlTableCell htCell = new HtmlTableCell();
+                htCell.InnerText = prop.Name;
+                return htCell;
+            }).ToList().ForEach(cell => htColumnsRow.Cells.Add(cell));
+            ht.Rows.Add(htColumnsRow);
+            //Get the remaining rows
+            Data.ForEach(delegate (T obj)
+            {
+                HtmlTableRow htRow = new HtmlTableRow();
+                obj.GetType().GetProperties().ToList().ForEach(delegate (PropertyInfo prop)
+                {
+                    HtmlTableCell htCell = new HtmlTableCell();
+                    htCell.InnerText = prop.GetValue(obj, null).ToString();
+                    htRow.Cells.Add(htCell);
+                });
+                ht.Rows.Add(htRow);
+            });
+            return ht;
         }
     }
 }
