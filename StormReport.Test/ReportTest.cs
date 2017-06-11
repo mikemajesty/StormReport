@@ -26,36 +26,36 @@ namespace StormReport.Test
         [ExpectedException(typeof(ArgumentNullException))]
         public void ResponseIsNull()
         {
-            List<ClassTest> list = GetList();
+            List<MockEmployeeTest> list = GetList();
             report.CreateExcelBase(list, null);
         }
 
         [TestMethod]
         public void GenerateReport()
         {
-            List<ClassTest> list = GetList();
+            List<MockEmployeeTest> list = GetList();
             report.CreateExcelBase(list, response);
         }
 
         [TestMethod]
         public void GenerateEmptyExcelRow()
         {
-            report.CreateExcelBase(new List<ClassTest>(), response);
+            report.CreateExcelBase(new List<MockEmployeeTest>(), response);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void GenerateNullListObject()
         {
-            List<ClassTest> list = null;
+            List<MockEmployeeTest> list = null;
             report.CreateExcelBase(list, response);
         }
 
-        private static List<ClassTest> GetList()
+        private static List<MockEmployeeTest> GetList()
         {
-            var class1 = new ClassTest { Cidade = "Ibiúna", Estado = "SP", Idade = 10, Nome = "Mike" };
-            var class2 = new ClassTest { Cidade = "Sorocaba", Estado = "SP", Idade = 28, Nome = "Mike Lima" };
-            var list = new List<ClassTest>();
+            var class1 = new MockEmployeeTest { Cidade = "Ibiúna", Estado = "SP", Idade = 10, Nome = "Mike" };
+            var class2 = new MockEmployeeTest { Cidade = "Sorocaba", Estado = "SP", Idade = 28, Nome = "Mike Lima" };
+            var list = new List<MockEmployeeTest>();
             list.Add(class1);
             list.Add(class2);
             return list;

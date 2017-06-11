@@ -89,8 +89,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ClassTest.cs" />
-    <Compile Include="ExcelFileNameAttributeTest.cs" />
+    <Compile Include="Model\MockEmployeeTest.cs" />
+    <Compile Include="Annotations\ExcelFileNameAttributeTest.cs" />
     <Compile Include="ReportTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -5,13 +5,13 @@ using System.Web.UI;
 namespace StormReport.Test
 {
     [ExcelFileName("ExcelReport", useDateTimeToAdditionalName: true)]
-    public class ClassTest
+    public class MockEmployeeTest
     {
-        private List<ClassTest> List { get; set; }
+        private List<MockEmployeeTest> List { get; set; }
 
-        public ClassTest()
+        public MockEmployeeTest()
         {
-            List = new List<ClassTest>();
+            List = new List<MockEmployeeTest>();
         }
 
         [ExportableColumnHeaderName("Nome do Cliente")]
@@ -33,12 +33,13 @@ namespace StormReport.Test
         [ExportableColumnHeaderStyle("text-align: center;", "color: red;", "font-size: 17px;")]
         [ExportableColumnContentStyle("text-align: center;", "color: blue;", "font-size: 17px;")]
         public string Estado { get; set; }
-        public void Add(ClassTest e)
+
+        public void Add(MockEmployeeTest e)
         {
             List.Add(e);
         }
 
-        public List<ClassTest> GetList()
+        public List<MockEmployeeTest> GetList()
         {
             return List;
         }
@@ -46,11 +47,11 @@ namespace StormReport.Test
 
     public class ClassTestWithoutName
     {
-        private List<ClassTest> List { get; set; }
+        private List<MockEmployeeTest> List { get; set; }
 
         public ClassTestWithoutName()
         {
-            List = new List<ClassTest>();
+            List = new List<MockEmployeeTest>();
         }
 
         [ExportableColumnHeaderName("Nome do Cliente")]
@@ -65,12 +66,12 @@ namespace StormReport.Test
         [ExportableColumnHeaderName("Estado do Cliente")]
         public string Estado { get; set; }
 
-        public void Add(ClassTest e)
+        public void Add(MockEmployeeTest e)
         {
             List.Add(e);
         }
 
-        public List<ClassTest> GetList()
+        public List<MockEmployeeTest> GetList()
         {
             return List;
         }
