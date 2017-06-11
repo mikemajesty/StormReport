@@ -8,12 +8,12 @@ using System.IO;
 namespace StormReport.Test
 {
     [TestClass]
-    public class ReportByTest
+    public class ReportTest
     {
         private Report report;
         private HttpResponseBase response;
 
-        public ReportByTest()
+        public ReportTest()
         {
             report = new Report();
             response = Mock.Of<HttpResponseBase>();
@@ -27,7 +27,7 @@ namespace StormReport.Test
         public void ResponseIsNull()
         {
             List<ClassTest> list = GetList();
-            report.CreateExcelBase(list);
+            report.CreateExcelBase(list, null);
         }
 
         [TestMethod]

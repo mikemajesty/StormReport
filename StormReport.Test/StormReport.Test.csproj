@@ -90,7 +90,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ClassTest.cs" />
-    <Compile Include="ReportByTest.cs" />
+    <Compile Include="ExcelFileNameAttributeTest.cs" />
+    <Compile Include="ReportTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

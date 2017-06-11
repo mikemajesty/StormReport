@@ -11,7 +11,7 @@ namespace StormReport
 {
     public class Report
     {
-        public void CreateExcelBase<T>(IList<T> listItems, HttpResponseBase Response = null)
+        public void CreateExcelBase<T>(IList<T> listItems, HttpResponseBase Response)
         {
             var properties = typeof(T).GetProperties().Where(f => ((ExportableColumnNameAttribute)f.GetCustomAttributes(typeof(ExportableColumnNameAttribute), true).FirstOrDefault()) != null);
 
@@ -40,7 +40,7 @@ namespace StormReport
 
             if (listItems == null)
             {
-                throw new ArgumentNullException("List cannot be null.");
+                throw new ArgumentNullException("Excel list is Required.");
             }
 
             foreach (var row in listItems.Select(o => new { Properties = properties.Select(g => g), Value = o }).ToList())
