@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Web.UI;
 
 namespace StormReport.Test
 {
@@ -13,6 +15,7 @@ namespace StormReport.Test
         }
 
         [ExportableColumnName("Nome do Cliente")]
+        //[ExportableColumnStyle("text-align: center;", "color: red;", "font-size: 17px;")]/
         public string Nome { get; set; }
 
         [ExportableColumnName("Idade do Cliente")]

@@ -23,15 +23,15 @@ namespace StormReport
                 throw new ArgumentNullException("Annotation ExcelFileName is Required.");
             }
 
-            var excelName = ((ExcelFileNameAttribute)propExcelName).Name;
+            var excelName = GetExcelName(propExcelName);
 
             var list = new List<Table>();
 
             HtmlTable table = new HtmlTable();
             table.InitTable();
-           
+
             AddTableColumnHeader(properties, table);
-           
+
             if (listItems == null)
             {
                 throw new ArgumentNullException("Excel list is Required.");
@@ -48,6 +48,11 @@ namespace StormReport
 
             AddResponseHeader(Response, excelName);
             DownloadExcel(Response, table);
+        }
+
+        private static string GetExcelName(object propExcelName)
+        {
+            return ((ExcelFileNameAttribute)propExcelName).Name;
         }
 
         private static void AddTableColumnCell<T>(IList<T> listItems, IEnumerable<PropertyInfo> properties, HtmlTable table)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace StormReport
@@ -7,9 +8,9 @@ namespace StormReport
     [AttributeUsage(AttributeTargets.Property)]
     public class ExportableColumnStyleAttribute : Attribute
     {
-        public string[] Styles { get; set; }
+        public HtmlTextWriterStyle[] Styles { get; set; }
 
-        public ExportableColumnStyleAttribute(params string[] styles)
+        public ExportableColumnStyleAttribute(params HtmlTextWriterStyle[] styles)
         {
             this.Styles = styles;
         }
