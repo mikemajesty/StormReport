@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildTable\HtmlTable.cs" />
     <Compile Include="ClassFinalTest.cs" />
     <Compile Include="ExcelExtensionEnum.cs" />
     <Compile Include="ExcelFileNameAttribute.cs" />
