@@ -13,9 +13,9 @@ namespace StormReport
     {
         public void CreateExcelBase<T>(IList<T> listItems, HttpResponseBase Response)
         {
-            var properties = typeof(T).GetProperties().Where(f => ((ExportableColumnNameAttribute)f.GetCustomAttributes(typeof(ExportableColumnNameAttribute), true).FirstOrDefault()) != null);
+            var properties = GetObjectPropertyInfo<T>();
 
-            var propExcelName  = typeof(T).GetCustomAttributes(typeof(ExcelFileNameAttribute), true).FirstOrDefault();
+            var propExcelName = GetExcelFileName<T>();
 
             if (propExcelName == null)
             {
@@ -65,7 +65,7 @@ namespace StormReport
 
             Response.ClearContent();
             Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment; filename="+ excelName);
+            Response.AddHeader("content-disposition", "attachment; filename=" + excelName);
             Response.ContentType = "application/ms-excel";
 
             Response.Charset = "utf-8";
@@ -73,6 +73,16 @@ namespace StormReport
             Response.Output.Write(builder.ToString());
             Response.Flush();
             Response.End();
+        }
+
+        private IEnumerable<PropertyInfo> GetObjectPropertyInfo<T>()
+        {
+            return typeof(T).GetProperties().Where(f => ((ExportableColumnNameAttribute)f.GetCustomAttributes(typeof(ExportableColumnNameAttribute), true).FirstOrDefault()) != null);
+        }
+
+        private object GetExcelFileName<T>()
+        {
+            return typeof(T).GetCustomAttributes(typeof(ExcelFileNameAttribute), true).FirstOrDefault();
         }
 
         private static Type GetType(PropertyInfo p)

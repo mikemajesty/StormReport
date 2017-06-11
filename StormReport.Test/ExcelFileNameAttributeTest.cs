@@ -3,6 +3,9 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Web;
 
 namespace StormReport.Test
@@ -17,7 +20,6 @@ namespace StormReport.Test
         {
             report = new Report();
             response = Mock.Of<HttpResponseBase>();
-
             var textWriter = Mock.Of<TextWriter>();
             response.Output = textWriter;
         }
@@ -30,6 +32,23 @@ namespace StormReport.Test
             report.CreateExcelBase(list, response);
         }
 
+        [TestMethod]
+        public void VerifyExcelWithAnnotationName()
+        {
+
+            List<ClassTest> list = GetList();
+            report.CreateExcelBase(list, response);
+        }
+
+        private static List<ClassTest> GetList()
+        {
+            var class1 = new ClassTest { Cidade = "Ibiúna", Estado = "SP", Idade = 10, Nome = "Mike" };
+            var class2 = new ClassTest { Cidade = "Sorocaba", Estado = "SP", Idade = 28, Nome = "Mike Lima" };
+            var list = new List<ClassTest>();
+            list.Add(class1);
+            list.Add(class2);
+            return list;
+        }
 
         private static List<ClassTestWithoutName> GetWithoutExcelNameList()
         {
