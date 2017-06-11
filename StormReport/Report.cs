@@ -7,7 +7,6 @@ using System.Web;
 using System.Data;
 using System.Text;
 using StormReport.BuildTable;
-using System.Collections;
 
 namespace StormReport
 {
@@ -64,7 +63,14 @@ namespace StormReport
                 foreach (PropertyInfo cell in row.Properties)
                 {
                     var cellValue = row.Properties.Select(g => cell.GetValue(row.Value)).FirstOrDefault();
-                    table.AddColumnText(cellValue);
+                    var styleProperty = cell.GetCustomAttributes(typeof(ExportableColumnContentStyleAttribute), false).FirstOrDefault();
+                    var cellStyle = new string[] { };
+
+                    if (styleProperty != null)
+                    {
+                        cellStyle = ((ExportableColumnContentStyleAttribute)styleProperty).Styles;
+                    }
+                    table.AddColumnText(cellValue, cellStyle);
                 }
                 table.EndRow();
             }
@@ -75,16 +81,14 @@ namespace StormReport
             table.AddRow();
             foreach (var headerCell in properties)
             {
-                var headerText = ((ExportableColumnNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnNameAttribute), false).FirstOrDefault()).Description;
-                var styleProperty = headerCell.GetCustomAttributes(typeof(ExportableColumnStyleAttribute), false).FirstOrDefault();
-
+                var headerText = ((ExportableColumnHeaderNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderNameAttribute), false).FirstOrDefault()).Description;
+                var styleProperty = headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderStyleAttribute), false).FirstOrDefault();
                 var headerStyle = new string[] { };
 
                 if (styleProperty != null)
                 {
-                    headerStyle = ((ExportableColumnStyleAttribute)styleProperty).Styles;
+                    headerStyle = ((ExportableColumnHeaderStyleAttribute)styleProperty).Styles;
                 }
-               
                 table.AddColumnTextHeader(headerText, headerStyle);
             }
             table.EndRow();
@@ -110,7 +114,7 @@ namespace StormReport
 
         private IEnumerable<PropertyInfo> GetObjectPropertyInfo<T>()
         {
-            return typeof(T).GetProperties().Where(f => ((ExportableColumnNameAttribute)f.GetCustomAttributes(typeof(ExportableColumnNameAttribute), true).FirstOrDefault()) != null);
+            return typeof(T).GetProperties().Where(f => ((ExportableColumnHeaderNameAttribute)f.GetCustomAttributes(typeof(ExportableColumnHeaderNameAttribute), true).FirstOrDefault()) != null);
         }
 
         private object GetExcelFileName<T>()

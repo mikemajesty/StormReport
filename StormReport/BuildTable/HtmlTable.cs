@@ -45,9 +45,14 @@ namespace StormReport.BuildTable
             table.Append("</th>\n");
         }
 
-        public void AddColumnText(object text)
+        public void AddColumnText(object text, string[] style)
         {
-            table.Append("<td scope='row'>\n");
+            StringBuilder styles = new StringBuilder();
+            Array.ForEach(style, s =>
+            {
+                styles.Append(s.Contains(";") ? s : s + ";");
+            });
+            table.Append(string.Format("<td scope='row' style='{0}'>\n", styles));
             table.Append(text);
             table.Append("</td>\n");
         }

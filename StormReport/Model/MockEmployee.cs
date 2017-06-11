@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Web.UI;
 
 namespace StormReport.Test
 {
     [ExcelFileName("ExcelReport", useDateTimeToAdditionalName: true)]
-    public class ClassTest
+    public class ClassFinalTest
     {
-        private List<ClassTest> List { get; set; }
+        private List<ClassFinalTest> List;
 
-        public ClassTest()
+        public ClassFinalTest()
         {
-            List = new List<ClassTest>();
+            List = new List<ClassFinalTest>();
         }
 
         [ExportableColumnHeaderName("Nome do Cliente")]
@@ -33,44 +31,13 @@ namespace StormReport.Test
         [ExportableColumnHeaderStyle("text-align: center;", "color: red;", "font-size: 17px;")]
         [ExportableColumnContentStyle("text-align: center;", "color: blue;", "font-size: 17px;")]
         public string Estado { get; set; }
-        public void Add(ClassTest e)
+
+        public void Add(ClassFinalTest e)
         {
             List.Add(e);
         }
 
-        public List<ClassTest> GetList()
-        {
-            return List;
-        }
-    }
-
-    public class ClassTestWithoutName
-    {
-        private List<ClassTest> List { get; set; }
-
-        public ClassTestWithoutName()
-        {
-            List = new List<ClassTest>();
-        }
-
-        [ExportableColumnHeaderName("Nome do Cliente")]
-        public string Nome { get; set; }
-
-        [ExportableColumnHeaderName("Idade do Cliente")]
-        public int Idade { get; set; }
-
-        [ExportableColumnHeaderName("Cidade do Cliente")]
-        public string Cidade { get; set; }
-
-        [ExportableColumnHeaderName("Estado do Cliente")]
-        public string Estado { get; set; }
-
-        public void Add(ClassTest e)
-        {
-            List.Add(e);
-        }
-
-        public List<ClassTest> GetList()
+        public List<ClassFinalTest> GetList()
         {
             return List;
         }

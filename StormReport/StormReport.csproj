@@ -81,11 +81,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildTable\HtmlTable.cs" />
-    <Compile Include="ClassFinalTest.cs" />
-    <Compile Include="ExcelExtensionEnum.cs" />
-    <Compile Include="ExcelFileNameAttribute.cs" />
-    <Compile Include="ExportableColumnNameAttribute.cs" />
-    <Compile Include="ExportableColumnStyleAttribute.cs" />
+    <Compile Include="Model\MockEmployee.cs" />
+    <Compile Include="Model\ExcelExtensionEnum.cs" />
+    <Compile Include="Annotations\ExcelFileNameAttribute.cs" />
+    <Compile Include="Annotations\ExportableColumnContentStyleAttribute.cs" />
+    <Compile Include="Annotations\ExportableColumnHeaderNameAttribute.cs" />
+    <Compile Include="Annotations\ExportableColumnHeaderStyleAttribute.cs" />
     <Compile Include="Report.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -93,6 +94,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -3,11 +3,11 @@
 namespace StormReport
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class ExportableColumnStyleAttribute : Attribute
+    public class ExportableColumnContentStyleAttribute : Attribute
     {
         public string[] Styles { get; set; }
 
-        public ExportableColumnStyleAttribute(params string[] styles)
+        public ExportableColumnContentStyleAttribute(params string[] styles)
         {
             this.Styles = styles;
         }
