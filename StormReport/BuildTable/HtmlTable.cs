@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace StormReport.BuildTable
 {
@@ -31,9 +32,15 @@ namespace StormReport.BuildTable
             table.Append("</tr>\n");
         }
 
-        public void AddColumnTextHeader(object text)
+        public void AddColumnTextHeader(object text, string[] style)
         {
-            table.Append("<th scope='col'>\n");
+            StringBuilder styles = new StringBuilder();
+            Array.ForEach(style, s =>
+            {
+                styles.Append(s.Contains(";") ? s : s + ";");
+            });
+
+            table.Append(string.Format("<th scope='col' style='{0}'>\n", styles));
             table.Append(text);
             table.Append("</th>\n");
         }

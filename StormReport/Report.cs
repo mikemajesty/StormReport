@@ -7,6 +7,7 @@ using System.Web;
 using System.Data;
 using System.Text;
 using StormReport.BuildTable;
+using System.Collections;
 
 namespace StormReport
 {
@@ -75,7 +76,16 @@ namespace StormReport
             foreach (var headerCell in properties)
             {
                 var headerText = ((ExportableColumnNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnNameAttribute), false).FirstOrDefault()).Description;
-                table.AddColumnTextHeader(headerText);
+                var styleProperty = headerCell.GetCustomAttributes(typeof(ExportableColumnStyleAttribute), false).FirstOrDefault();
+
+                var headerStyle = new string[] { };
+
+                if (styleProperty != null)
+                {
+                    headerStyle = ((ExportableColumnStyleAttribute)styleProperty).Styles;
+                }
+               
+                table.AddColumnTextHeader(headerText, headerStyle);
             }
             table.EndRow();
         }
