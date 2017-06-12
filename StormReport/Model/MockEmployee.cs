@@ -19,7 +19,7 @@ namespace StormReport.Test
 
         [ExportableColumnHeaderName("Idade do Cliente")]
         [ExportableColumnHeaderStyle("text-align: center;", "color: red;", "font-size: 17px;")]
-        [ExportableColumnContentStyle("text-align: center;", "color: blue;", "font-size: 17px;")]
+        [ExportableColumnContentStyle("text-align: center;", "color: blue;", @"font-size: 17px; mso-number-format: '0\.000'")]
         public int Idade { get; set; }
 
         [ExportableColumnHeaderName("Cidade do Cliente")]

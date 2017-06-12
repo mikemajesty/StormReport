@@ -14,12 +14,14 @@ namespace StormReport.BuildTable
 
         public void InitTable()
         {
+            table.Append("<div>\n");
             table.Append("<table cellspacing='0' rules='all' border='1'>\n");
         }
 
         public void EndTable()
         {
             table.Append("</table>\n");
+            table.Append("</div>\n");
         }
 
         public void AddRow()

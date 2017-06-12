@@ -108,8 +108,8 @@ namespace StormReport
             Response.AddHeader("content-disposition", "attachment; filename=" + excelName);
             Response.ContentType = "application/ms-excel";
             Response.Charset = "utf-8";
-            Response.ContentEncoding = Encoding.Unicode;
-            Response.BinaryWrite(Encoding.Unicode.GetPreamble());
+            //Response.ContentEncoding = Encoding.Unicode;
+            //Response.BinaryWrite(Encoding.Unicode.GetPreamble());
         }
 
         private IEnumerable<PropertyInfo> GetObjectPropertyInfo<T>()
