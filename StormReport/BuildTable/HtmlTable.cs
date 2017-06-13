@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StormReport.Test;
+using System;
 using System.Text;
 
 namespace StormReport.BuildTable
@@ -47,7 +48,7 @@ namespace StormReport.BuildTable
             table.Append("</th>\n");
         }
 
-        public void AddColumnText(object text, string[] style)
+        public void AddColumnText(object text, string[] style, ExportableAddtionalTextAttribute additionalText)
         {
             StringBuilder styles = new StringBuilder();
             Array.ForEach(style, s =>
@@ -55,8 +56,18 @@ namespace StormReport.BuildTable
                 styles.Append(s.Contains(";") ? s : s + ";");
             });
             table.Append(string.Format("<td scope='row' style='{0}'>\n", styles));
-            table.Append(text);
+            table.Append(FormatText(text, additionalText));
             table.Append("</td>\n");
+        }
+
+        private string FormatText(object text, ExportableAddtionalTextAttribute additionalText)
+        {
+            if (additionalText == null || string.IsNullOrEmpty(additionalText.Description))
+            {
+                return text.ToString();
+            }
+
+            return additionalText.Direction == Model.AdditionalTextEnum.LEFT ? additionalText.Description + text.ToString() : text.ToString() + additionalText.Description;
         }
 
         public string ToHtml()

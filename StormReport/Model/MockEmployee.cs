@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using StormReport.Model;
+using System.Collections.Generic;
 
 namespace StormReport.Test
 {
@@ -15,6 +16,7 @@ namespace StormReport.Test
         [ExportableColumnHeaderName("Nome do Cliente")]
         [ExportableColumnHeaderStyle("text-align: center;", "color: red;", "font-size: 17px;")]
         [ExportableColumnContentStyle("text-align: center;", "color: gray;", "font-size: 17px;")]
+        [ExportableAddtionalText("R$ ", AdditionalTextEnum.LEFT)]
         public string Nome { get; set; }
 
         [ExportableColumnHeaderName("Idade do Cliente")]

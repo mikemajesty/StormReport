@@ -81,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildTable\HtmlTable.cs" />
+    <Compile Include="Annotations\ExportableAddtionalTextAttribute.cs" />
+    <Compile Include="Model\AdditionalTextEnum.cs" />
     <Compile Include="Model\MockEmployee.cs" />
     <Compile Include="Model\ExcelExtensionEnum.cs" />
     <Compile Include="Annotations\ExcelFileNameAttribute.cs" />

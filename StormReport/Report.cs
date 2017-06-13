@@ -7,6 +7,7 @@ using System.Web;
 using System.Data;
 using System.Text;
 using StormReport.BuildTable;
+using StormReport.Test;
 
 namespace StormReport
 {
@@ -63,14 +64,10 @@ namespace StormReport
                 foreach (PropertyInfo cell in row.Properties)
                 {
                     var cellValue = row.Properties.Select(g => cell.GetValue(row.Value)).FirstOrDefault();
-                    var styleProperty = cell.GetCustomAttributes(typeof(ExportableColumnContentStyleAttribute), false).FirstOrDefault();
-                    var cellStyle = new string[] { };
+                    var styleProperty = ((ExportableColumnContentStyleAttribute)cell.GetCustomAttributes(typeof(ExportableColumnContentStyleAttribute), false).FirstOrDefault());
+                    var addtionalText = ((ExportableAddtionalTextAttribute)cell.GetCustomAttributes(typeof(ExportableAddtionalTextAttribute), false).FirstOrDefault());
 
-                    if (styleProperty != null)
-                    {
-                        cellStyle = ((ExportableColumnContentStyleAttribute)styleProperty).Styles;
-                    }
-                    table.AddColumnText(cellValue, cellStyle);
+                    table.AddColumnText(cellValue, styleProperty.Styles ?? new string[] { }, addtionalText);
                 }
                 table.EndRow();
             }
@@ -82,14 +79,9 @@ namespace StormReport
             foreach (var headerCell in properties)
             {
                 var headerText = ((ExportableColumnHeaderNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderNameAttribute), false).FirstOrDefault()).Description;
-                var styleProperty = headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderStyleAttribute), false).FirstOrDefault();
-                var headerStyle = new string[] { };
+                var styleProperty = ((ExportableColumnHeaderStyleAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderStyleAttribute), false).FirstOrDefault());
 
-                if (styleProperty != null)
-                {
-                    headerStyle = ((ExportableColumnHeaderStyleAttribute)styleProperty).Styles;
-                }
-                table.AddColumnTextHeader(headerText, headerStyle);
+                table.AddColumnTextHeader(headerText, styleProperty.Styles ?? new string[] { });
             }
             table.EndRow();
         }
