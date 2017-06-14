@@ -17,13 +17,13 @@ namespace StormReport.Test
         [ExportableColumnHeaderName("Nome do Cliente")]
         [ExportableColumnHeaderStyle("text-align: center;", "color: red;", "font-size: 17px;")]
         [ExportableColumnContentStyle("text-align: center;", "color: gray;", "font-size: 17px;")]
-        //[ExportableColumnGroup("Cliente")]
+        [ExportableColumnGroup("Cliente")]
         public string Nome { get; set; }
 
         [ExportableColumnHeaderName("Idade do Cliente")]
         [ExportableColumnHeaderStyle("text-align: center;", "color: red;", "font-size: 17px;")]
         [ExportableColumnContentStyle("text-align: center;", "color: blue;", "font-size: 17px;")]
-        //[ExportableColumnGroup("Cliente")]
+        [ExportableColumnGroup("Endereço")]
         public int Idade { get; set; }
 
         [ExportableColumnHeaderName("Cidade do Cliente")]

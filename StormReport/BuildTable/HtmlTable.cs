@@ -1,5 +1,6 @@
 ﻿using StormReport.Test;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace StormReport.BuildTable
@@ -37,11 +38,6 @@ namespace StormReport.BuildTable
 
         public void AddColumnTextHeader(object text, string[] style)
         {
-            var theader = @"<tr>
-                                <th colspan='2'>Produto</th>
-                                <th colspan='2'>Estoque</th>
-                            </tr>";
-
             StringBuilder styles = new StringBuilder();
 
             Array.ForEach(style, s =>
@@ -52,6 +48,11 @@ namespace StormReport.BuildTable
             table.Append(string.Format("<th scope='col' style='{0}'>\n", styles));
             table.Append(text);
             table.Append("</th>\n");
+        }
+
+        public void AddColumnGroup(string description, int colspan)
+        {
+            table.Append(string.Format("<th colspan={0}>{1}</th>", colspan, description));
         }
 
         public void AddColumnText(object text, string[] style, ExportableAddtionalTextAttribute additionalText)

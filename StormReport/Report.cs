@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Linq;
 using System.Web;
 using System.Data;
-using System.Text;
 using StormReport.BuildTable;
 using StormReport.Test;
+using System.Text;
 
 namespace StormReport
 {
@@ -31,6 +31,8 @@ namespace StormReport
             HtmlTable table = new HtmlTable();
             table.InitTable();
 
+            //AddColumnGroup(properties, table);
+
             AddTableColumnHeader(properties, table);
 
             if (listItems == null)
@@ -49,6 +51,21 @@ namespace StormReport
 
             AddResponseHeader(Response, excelName);
             DownloadExcel(Response, table);
+        }
+
+        private void AddColumnGroup(IEnumerable<PropertyInfo> properties, HtmlTable table)
+        {
+            var columnGroup = properties.Select(c => c.GetCustomAttributes(typeof(ExportableColumnGroupAttribute), false).FirstOrDefault()).ToList();
+
+            if (columnGroup.FirstOrDefault(c => ((ExportableColumnGroupAttribute)c) != null) == null)
+                return;
+
+            table.AddRow();
+            foreach (var prop in columnGroup.GroupBy(c => ((ExportableColumnGroupAttribute)c) == null ? null : ((ExportableColumnGroupAttribute)c).Description))
+            {
+                table.AddColumnGroup(prop.Key ?? "", prop.Count());
+            }
+            table.EndRow();
         }
 
         private static string GetExcelName(object propExcelName)
@@ -75,17 +92,12 @@ namespace StormReport
 
         private static void AddTableColumnHeader(IEnumerable<PropertyInfo> properties, HtmlTable table)
         {
-            var columnGroup = properties.Select(c => c.GetCustomAttributes(typeof(ExportableColumnGroupAttribute), false).FirstOrDefault()).ToList();
-            table.AddRow();
-
-            table.EndRow();
-
             table.AddRow();
             foreach (var headerCell in properties)
             {
                 var headerText = ((ExportableColumnHeaderNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderNameAttribute), false).FirstOrDefault()).Description;
                 var styleProperty = ((ExportableColumnHeaderStyleAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderStyleAttribute), false).FirstOrDefault());
-                
+
                 table.AddColumnTextHeader(headerText, styleProperty.Styles ?? new string[] { });
             }
             table.EndRow();
@@ -104,9 +116,10 @@ namespace StormReport
             Response.Buffer = true;
             Response.AddHeader("content-disposition", "attachment; filename=" + excelName);
             Response.ContentType = "application/ms-excel";
-            Response.Charset = "utf-8";
-            //Response.ContentEncoding = Encoding.Unicode;
-            //Response.BinaryWrite(Encoding.Unicode.GetPreamble());
+            Response.Charset = Encoding.UTF8.EncodingName;
+            Response.ContentType = "application/text";
+            Response.ContentEncoding = Encoding.Unicode;
+            Response.BinaryWrite(Encoding.Unicode.GetPreamble());
         }
 
         private IEnumerable<PropertyInfo> GetObjectPropertyInfo<T>()
