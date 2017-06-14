@@ -101,10 +101,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="excelTest.xls" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="test.html" />
+    <Content Include="htmlTest.html" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

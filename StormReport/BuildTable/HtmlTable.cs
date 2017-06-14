@@ -52,7 +52,7 @@ namespace StormReport.BuildTable
 
         public void AddColumnGroup(string description, int colspan)
         {
-            table.Append(string.Format("<th colspan={0}>{1}</th>", colspan, description));
+            table.Append(string.Format("<th colspan={0}>{1}</th>\n", colspan, description));
         }
 
         public void AddColumnText(object text, string[] style, ExportableAddtionalTextAttribute additionalText)

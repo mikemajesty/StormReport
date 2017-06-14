@@ -31,7 +31,7 @@ namespace StormReport
             HtmlTable table = new HtmlTable();
             table.InitTable();
 
-            //AddColumnGroup(properties, table);
+            AddColumnGroup(properties, table);
 
             AddTableColumnHeader(properties, table);
 
