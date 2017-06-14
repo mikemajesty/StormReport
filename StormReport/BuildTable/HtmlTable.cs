@@ -15,13 +15,8 @@ namespace StormReport.BuildTable
 
         public void InitTable()
         {
-            var theader = @"<tr>
-                                <th colspan='2'>Produto</th>
-                                <th colspan='2'>Estoque</th>
-                            </tr>";
             table.Append("<div>\n");
             table.Append("<table cellspacing='0' rules='all' border='1'>\n");
-            table.Append(theader);
         }
 
         public void EndTable()
@@ -42,7 +37,13 @@ namespace StormReport.BuildTable
 
         public void AddColumnTextHeader(object text, string[] style)
         {
+            var theader = @"<tr>
+                                <th colspan='2'>Produto</th>
+                                <th colspan='2'>Estoque</th>
+                            </tr>";
+
             StringBuilder styles = new StringBuilder();
+
             Array.ForEach(style, s =>
             {
                 styles.Append(s.Contains(";") ? s : s + ";");

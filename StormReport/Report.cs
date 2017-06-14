@@ -75,12 +75,17 @@ namespace StormReport
 
         private static void AddTableColumnHeader(IEnumerable<PropertyInfo> properties, HtmlTable table)
         {
+            var columnGroup = properties.Select(c => c.GetCustomAttributes(typeof(ExportableColumnGroupAttribute), false).FirstOrDefault()).ToList();
+            table.AddRow();
+
+            table.EndRow();
+
             table.AddRow();
             foreach (var headerCell in properties)
             {
                 var headerText = ((ExportableColumnHeaderNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderNameAttribute), false).FirstOrDefault()).Description;
                 var styleProperty = ((ExportableColumnHeaderStyleAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderStyleAttribute), false).FirstOrDefault());
-
+                
                 table.AddColumnTextHeader(headerText, styleProperty.Styles ?? new string[] { });
             }
             table.EndRow();
