@@ -6,30 +6,33 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using StormReport.BuildTable;
-using StormReport.Test;
 using System.Text;
 
 namespace StormReport
 {
     public class Report
     {
+        public string ExcelName { private get; set; }
+        public string ExcelTitle { private get; set; }
+
+        public Report(string excelTitle, string excelName = "ExcelReport")
+        {
+            this.ExcelName = excelName;
+            this.ExcelTitle = excelTitle;
+        }
+
         public void CreateExcelBase<T>(IList<T> listItems, HttpResponseBase Response)
         {
             var properties = GetObjectPropertyInfo<T>();
 
-            var propExcelName = GetExcelFileName<T>();
-
-            if (propExcelName == null)
-            {
-                throw new ArgumentNullException("Annotation ExcelFileName is Required.");
-            }
-
-            var excelName = GetExcelName(propExcelName);
+            var excelName = this.ExcelName;
 
             var list = new List<Table>();
 
             HtmlTable table = new HtmlTable();
             table.InitTable();
+
+            AddExcelTitle<T>(table, properties.Count());
 
             AddColumnGroup(properties, table);
 
@@ -49,7 +52,7 @@ namespace StormReport
                 throw new ArgumentNullException("Response is Required.");
             }
 
-            AddResponseHeader(Response, excelName);
+            AddResponseHeader(Response);
             DownloadExcel(Response, table);
         }
 
@@ -68,9 +71,11 @@ namespace StormReport
             table.EndRow();
         }
 
-        private static string GetExcelName(object propExcelName)
+        private void AddExcelTitle<T>(HtmlTable table, int columnCount)
         {
-            return ((ExcelFileNameAttribute)propExcelName).Name;
+            table.AddRow();
+            table.AddExcelTitle(this.ExcelTitle, columnCount, this.GetTitleStyles<T>());
+            table.EndRow();
         }
 
         private static void AddTableColumnCell<T>(IList<T> listItems, IEnumerable<PropertyInfo> properties, HtmlTable table)
@@ -110,11 +115,11 @@ namespace StormReport
             Response.End();
         }
 
-        private void AddResponseHeader(HttpResponseBase Response, string excelName)
+        private void AddResponseHeader(HttpResponseBase Response)
         {
             Response.ClearContent();
             Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment; filename=" + excelName);
+            Response.AddHeader("content-disposition", "attachment; filename=" + GetExcelName());
             Response.ContentType = "application/ms-excel";
             Response.Charset = Encoding.UTF8.EncodingName;
             Response.ContentType = "application/text";
@@ -122,14 +127,20 @@ namespace StormReport
             Response.BinaryWrite(Encoding.Unicode.GetPreamble());
         }
 
+        private string GetExcelName()
+        {
+            return this.ExcelName.Contains(".") ? string.Concat(this.ExcelName.Remove(this.ExcelName.LastIndexOf(".")), ".xls") : string.Concat(this.ExcelName, ".xls");
+        }
+
         private IEnumerable<PropertyInfo> GetObjectPropertyInfo<T>()
         {
             return typeof(T).GetProperties().Where(f => ((ExportableColumnHeaderNameAttribute)f.GetCustomAttributes(typeof(ExportableColumnHeaderNameAttribute), true).FirstOrDefault()) != null);
         }
 
-        private object GetExcelFileName<T>()
+        private string[] GetTitleStyles<T>()
         {
-            return typeof(T).GetCustomAttributes(typeof(ExcelFileNameAttribute), true).FirstOrDefault();
+            var propExcelName = typeof(T).GetCustomAttributes(typeof(ExcelTitleStyleAttribute), true).FirstOrDefault();
+            return ((ExcelTitleStyleAttribute)propExcelName) != null ? ((ExcelTitleStyleAttribute)propExcelName).Styles : new string[] { };
         }
     }
 }

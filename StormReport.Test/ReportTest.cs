@@ -15,7 +15,7 @@ namespace StormReport.Test
 
         public ReportTest()
         {
-            report = new Report();
+            report = new Report("Relatório de Cliente: " + DateTime.Now);
             response = Mock.Of<HttpResponseBase>();
 
             var textWriter = Mock.Of<TextWriter>();

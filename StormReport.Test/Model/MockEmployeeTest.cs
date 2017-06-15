@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Web.UI;
 
 namespace StormReport.Test
 {
-    [ExcelFileName("ExcelReport", useDateTimeToAdditionalName: true)]
+    [ExcelTitleStyle("background-color:powderblue;")]
     public class MockEmployeeTest
     {
         private List<MockEmployeeTest> List { get; set; }

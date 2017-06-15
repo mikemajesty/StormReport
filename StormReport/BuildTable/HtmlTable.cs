@@ -1,6 +1,4 @@
-﻿using StormReport.Test;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Text;
 
 namespace StormReport.BuildTable
@@ -53,6 +51,16 @@ namespace StormReport.BuildTable
         public void AddColumnGroup(string description, int colspan)
         {
             table.Append(string.Format("<th colspan={0}>{1}</th>\n", colspan, description));
+        }
+
+        public void AddExcelTitle(string title, int columnCount, string[] styles)
+        {
+            StringBuilder style = new StringBuilder();
+            Array.ForEach(styles, s =>
+            {
+                style.Append(s.Contains(";") ? s : s + ";");
+            });
+            table.Append(string.Format("<th colspan={0} style='{2}'>{1}</th>\n", columnCount, title, style));
         }
 
         public void AddColumnText(object text, string[] style, ExportableAddtionalTextAttribute additionalText)

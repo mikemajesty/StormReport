@@ -84,9 +84,8 @@
     <Compile Include="Annotations\ExportableAddtionalTextAttribute.cs" />
     <Compile Include="Model\AdditionalTextEnum.cs" />
     <Compile Include="Annotations\ExportableColumnGroupAttribute.cs" />
+    <Compile Include="Annotations\ExcelTitleStyleAttribute.cs" />
     <Compile Include="Model\MockEmployee.cs" />
-    <Compile Include="Model\ExcelExtensionEnum.cs" />
-    <Compile Include="Annotations\ExcelFileNameAttribute.cs" />
     <Compile Include="Annotations\ExportableColumnContentStyleAttribute.cs" />
     <Compile Include="Annotations\ExportableColumnHeaderNameAttribute.cs" />
     <Compile Include="Annotations\ExportableColumnHeaderStyleAttribute.cs" />

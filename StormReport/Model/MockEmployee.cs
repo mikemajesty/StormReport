@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StormReport.Test
 {
-    [ExcelFileName("ExcelReport", useDateTimeToAdditionalName: true)]
+    [ExcelTitleStyle("background-color:powderblue;")]
     public class ClassFinalTest
     {
         private List<ClassFinalTest> List;

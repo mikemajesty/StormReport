@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StormReport.Test
+namespace StormReport
 {
     public class ExportableColumnGroupAttribute : Attribute
     {

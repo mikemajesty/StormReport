@@ -3,9 +3,6 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Web;
 
 namespace StormReport.Test
@@ -18,7 +15,7 @@ namespace StormReport.Test
 
         public ExcelFileNameAttributeTest()
         {
-            report = new Report();
+            report = new Report("Relatório de Cliente: "+ DateTime.Now);
             response = Mock.Of<HttpResponseBase>();
             var textWriter = Mock.Of<TextWriter>();
             response.Output = textWriter;
