@@ -73,20 +73,21 @@ namespace StormReport
             foreach (var row in listItems.Select(o => new { Properties = properties.Select(g => g), Value = o }).ToList())
             {
                 TableRow rows = new TableRow();
+                rows.TableSection = TableRowSection.TableBody;
                 foreach (PropertyInfo cell in row.Properties)
                 {
                     var cellValue = row.Properties.Select(g => cell.GetValue(row.Value)).FirstOrDefault();
                     var styleProperty = ((ExportableColumnContentStyleAttribute)cell.GetCustomAttributes(typeof(ExportableColumnContentStyleAttribute), false).FirstOrDefault());
-                    TableCell cells = new TableCell();
-                    cells.Text = cellValue.ToString();
-                    rows.Cells.Add(cells);
+                    TableCell ccell = new TableCell();
+                    ccell.Text = cellValue.ToString();
+                    rows.Cells.Add(ccell);
                     StringBuilder styles = new StringBuilder();
 
                     Array.ForEach(styleProperty.Styles, s =>
                     {
                         styles.Append(s.Contains(";") ? s : s + ";");
                     });
-                    cells.Attributes.Add("style", styles.ToString());
+                    ccell.Attributes.Add("style", styles.ToString());
                 }
                 tb.Rows.Add(rows);
             }
@@ -95,6 +96,7 @@ namespace StormReport
         private void AddTableHeader(IEnumerable<PropertyInfo> properties, Table tb)
         {
             TableRow rows = new TableRow();
+            rows.TableSection = TableRowSection.TableHeader;
             foreach (var headerCell in properties)
             {
                 var headerText = ((ExportableColumnHeaderNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderNameAttribute), false).FirstOrDefault()).Description;
@@ -118,14 +120,15 @@ namespace StormReport
         private void AddTableGroup(IEnumerable<PropertyInfo> properties, Table tb)
         {
             TableRow rows = new TableRow();
+            rows.TableSection = TableRowSection.TableHeader;
             var columnGroup = properties.Select(c => c.GetCustomAttributes(typeof(ExportableColumnGroupAttribute), false).FirstOrDefault()).ToList();
 
             foreach (var prop in columnGroup.GroupBy(c => ((ExportableColumnGroupAttribute)c) == null ? null : ((ExportableColumnGroupAttribute)c).Description))
             {
-                TableHeaderCell hcell = new TableHeaderCell();
-                hcell.Text = prop.Key;
-                hcell.ColumnSpan = prop.Count();
-                rows.Cells.Add(hcell);
+                TableHeaderCell gcell = new TableHeaderCell();
+                gcell.Text = prop.Key;
+                gcell.ColumnSpan = prop.Count();
+                rows.Cells.Add(gcell);
             }
             tb.Rows.Add(rows);
         }
@@ -133,7 +136,7 @@ namespace StormReport
         private void AddTableTitle<T>(IEnumerable<PropertyInfo> properties, Table tb)
         {
             TableRow rows = new TableRow();
-
+            rows.TableSection = TableRowSection.TableHeader;
             StringBuilder style = new StringBuilder();
 
             Array.ForEach(this.GetTitleStyles<T>(), s =>
@@ -162,9 +165,9 @@ namespace StormReport
             Response.Buffer = true;
             Response.AddHeader("content-disposition", "attachment; filename=" + GetExcelName());
             Response.ContentType = "application/vnd.ms-excel";
-            /*Response.Charset = Encoding.UTF8.EncodingName;
+            Response.Charset = Encoding.UTF8.EncodingName;
             Response.ContentEncoding = Encoding.Unicode;
-            Response.BinaryWrite(Encoding.Unicode.GetPreamble());*/
+            Response.BinaryWrite(Encoding.Unicode.GetPreamble());
         }
 
         private string GetExcelName()
