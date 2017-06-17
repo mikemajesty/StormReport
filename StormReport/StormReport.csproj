@@ -91,6 +91,7 @@
     <Compile Include="Annotations\ExportableColumnHeaderStyleAttribute.cs" />
     <Compile Include="Report.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestWithreport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
