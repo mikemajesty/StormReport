@@ -61,11 +61,72 @@ namespace StormReport
             }
         }
 
-        private void AddTableAttibute(Table tb)
+        private void AddTableTitle<T>(IEnumerable<PropertyInfo> properties, Table tb)
         {
-            tb.Attributes.Add("cellspacing", "0");
-            tb.Attributes.Add("rules", "all");
-            tb.Attributes.Add("border", "1");
+            TableHeaderRow rows = new TableHeaderRow();
+            rows.TableSection = TableRowSection.TableHeader;
+            StringBuilder style = new StringBuilder();
+
+            Array.ForEach(this.GetTitleStyles<T>(), s =>
+            {
+                style.Append(s.Contains(";") ? s : s + ";");
+            });
+
+            TableHeaderCell hcells = new TableHeaderCell();
+            hcells.Text = this.ExcelTitle;
+            hcells.ColumnSpan = properties.Count();
+            rows.Cells.Add(hcells);
+            hcells.Attributes.Add("style", style.ToString());
+            tb.Rows.Add(rows);
+        }
+
+        private void AddTableGroup(IEnumerable<PropertyInfo> properties, Table tb)
+        {
+            TableHeaderRow rows = new TableHeaderRow();
+            rows.TableSection = TableRowSection.TableHeader;
+            var columnGroup = properties.Select(c => c.GetCustomAttributes(typeof(ExportableColumnGroupAttribute), false).FirstOrDefault()).ToList();
+
+            foreach (var prop in columnGroup.GroupBy(c => ((ExportableColumnGroupAttribute)c) == null ? null : ((ExportableColumnGroupAttribute)c).Description))
+            {
+                TableHeaderCell gcell = new TableHeaderCell();
+                gcell.Text = prop.Key;
+                gcell.ColumnSpan = prop.Count();
+                var propStyle = (ExportableColumnGroupAttribute)columnGroup.FirstOrDefault(c => ((ExportableColumnGroupAttribute)c) != null && ((ExportableColumnGroupAttribute)c).Styles != null && ((ExportableColumnGroupAttribute)c).Description == prop.Key);
+                rows.Cells.Add(gcell);
+                StringBuilder styles = new StringBuilder();
+
+                Array.ForEach(propStyle.Styles, s =>
+                {
+                    styles.Append(s.Contains(";") ? s : s + ";");
+                });
+
+                gcell.Attributes.Add("style", styles.ToString());
+            }
+            tb.Rows.Add(rows);
+        }
+
+        private void AddTableHeader(IEnumerable<PropertyInfo> properties, Table tb)
+        {
+            TableHeaderRow rows = new TableHeaderRow();
+            rows.TableSection = TableRowSection.TableHeader;
+            foreach (var headerCell in properties)
+            {
+                var headerText = ((ExportableColumnHeaderNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderNameAttribute), false).FirstOrDefault()).Description;
+                var styleProperty = ((ExportableColumnHeaderStyleAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderStyleAttribute), false).FirstOrDefault());
+
+                TableHeaderCell hcell = new TableHeaderCell();
+                hcell.Text = headerText;
+                rows.Cells.Add(hcell);
+                StringBuilder styles = new StringBuilder();
+
+                Array.ForEach(styleProperty.Styles, s =>
+                {
+                    styles.Append(s.Contains(";") ? s : s + ";");
+                });
+
+                hcell.Attributes.Add("style", styles.ToString());
+            }
+            tb.Rows.Add(rows);
         }
 
         private void AddColumnContent<T>(IEnumerable<PropertyInfo> properties, Table tb, IList<T> listItems)
@@ -91,65 +152,6 @@ namespace StormReport
                 }
                 tb.Rows.Add(rows);
             }
-        }
-
-        private void AddTableHeader(IEnumerable<PropertyInfo> properties, Table tb)
-        {
-            TableRow rows = new TableRow();
-            rows.TableSection = TableRowSection.TableHeader;
-            foreach (var headerCell in properties)
-            {
-                var headerText = ((ExportableColumnHeaderNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderNameAttribute), false).FirstOrDefault()).Description;
-                var styleProperty = ((ExportableColumnHeaderStyleAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderStyleAttribute), false).FirstOrDefault());
-
-                TableHeaderCell hcell = new TableHeaderCell();
-                hcell.Text = headerText;
-                rows.Cells.Add(hcell);
-                StringBuilder styles = new StringBuilder();
-
-                Array.ForEach(styleProperty.Styles, s =>
-                {
-                    styles.Append(s.Contains(";") ? s : s + ";");
-                });
-
-                hcell.Attributes.Add("style", styles.ToString());
-            }
-            tb.Rows.Add(rows);
-        }
-
-        private void AddTableGroup(IEnumerable<PropertyInfo> properties, Table tb)
-        {
-            TableRow rows = new TableRow();
-            rows.TableSection = TableRowSection.TableHeader;
-            var columnGroup = properties.Select(c => c.GetCustomAttributes(typeof(ExportableColumnGroupAttribute), false).FirstOrDefault()).ToList();
-
-            foreach (var prop in columnGroup.GroupBy(c => ((ExportableColumnGroupAttribute)c) == null ? null : ((ExportableColumnGroupAttribute)c).Description))
-            {
-                TableHeaderCell gcell = new TableHeaderCell();
-                gcell.Text = prop.Key;
-                gcell.ColumnSpan = prop.Count();
-                rows.Cells.Add(gcell);
-            }
-            tb.Rows.Add(rows);
-        }
-
-        private void AddTableTitle<T>(IEnumerable<PropertyInfo> properties, Table tb)
-        {
-            TableRow rows = new TableRow();
-            rows.TableSection = TableRowSection.TableHeader;
-            StringBuilder style = new StringBuilder();
-
-            Array.ForEach(this.GetTitleStyles<T>(), s =>
-            {
-                style.Append(s.Contains(";") ? s : s + ";");
-            });
-
-            TableHeaderCell hcells = new TableHeaderCell();
-            hcells.Text = this.ExcelTitle;
-            hcells.ColumnSpan = properties.Count();
-            rows.Cells.Add(hcells);
-            hcells.Attributes.Add("style", style.ToString());
-            tb.Rows.Add(rows);
         }
 
         private void DownloadExcel(HttpResponseBase Response, StringWriter table)
@@ -184,6 +186,14 @@ namespace StormReport
         {
             var propExcelName = typeof(T).GetCustomAttributes(typeof(ExcelTitleStyleAttribute), true).FirstOrDefault();
             return ((ExcelTitleStyleAttribute)propExcelName) != null ? ((ExcelTitleStyleAttribute)propExcelName).Styles : new string[] { };
+        }
+
+        private void AddTableAttibute(Table tb)
+        {
+            tb.Attributes.Add("cellspacing", "0");
+            tb.Attributes.Add("rules", "all");
+            tb.Attributes.Add("border", "1");
+            tb.Attributes.Add("style", "border-collapse: collapse");
         }
     }
 }
