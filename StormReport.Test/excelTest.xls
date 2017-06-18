@@ -1,24 +1,31 @@
-﻿<table>
+﻿<table cellspacing="0" rules="all" border="1" style="border-collapse: collapse">
+  <thead>
     <tr>
-        <th colspan="1">Cliente</th>
-        <th colspan="3">Endereço</th>
+      <th colspan="4" style="background-color:powderblue;">Relatório de Cliente: 17/06/2017 21:05:47</th>
     </tr>
     <tr>
-        <th text-align=" center;" color=" red;" font-size=" 17px;">Nome do Cliente</th>
-        <th text-align=" center;" color=" red;" font-size=" 17px;">Idade do Cliente</th>
-        <th text-align=" center;" color=" red;" font-size=" 17px;">Cidade do Cliente</th>
-        <th text-align=" center;" color=" red;" font-size=" 17px;">Estado do Cliente</th>
+      <th colspan="1" style="">Cliente</th>
+      <th colspan="3" style="color: blue;">Endereço</th>
     </tr>
     <tr>
-        <td>Mike</td>
-        <td>10</td>
-        <td>Ibiúna</td>
-        <td>SP</td>
+      <th style="text-align: center;color: red;font-size: 17px;">Nome do Cliente</th>
+      <th style="text-align: center;color: red;font-size: 17px;">Idade do Cliente</th>
+      <th style="text-align: center;color: red;font-size: 17px;">Cidade do Cliente</th>
+      <th style="text-align: center;color: red;font-size: 17px;">Estado do Cliente</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;color: gray;font-size: 17px;">Mike</td>
+      <td style="text-align: center;color: blue;font-size: 17px;">10</td>
+      <td style="text-align: center;color: gray;font-size: 17px;">Ibiúna</td>
+      <td style="text-align: center;color: blue;font-size: 17px;">SP</td>
     </tr>
     <tr>
-        <td>Mike Lima</td>
-        <td>28</td>
-        <td>Sorocaba</td>
-        <td>SP</td>
+      <td style="text-align: center;color: gray;font-size: 17px;">Mike Lima</td>
+      <td style="text-align: center;color: blue;font-size: 17px;">28</td>
+      <td style="text-align: center;color: gray;font-size: 17px;">Sorocaba</td>
+      <td style="text-align: center;color: blue;font-size: 17px;">SP</td>
     </tr>
+  </tbody>
 </table>
