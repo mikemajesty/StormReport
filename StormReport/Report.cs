@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Web.UI.WebControls;
 using System;
 using System.Reflection;
 using System.Linq;
@@ -23,36 +22,29 @@ namespace StormReport
 
         public void CreateExcelBase<T>(IList<T> listItems, HttpResponseBase Response)
         {
+            if (listItems == null)
+                throw new ArgumentNullException("Excel list is Required.");
+
+            if (Response == null)
+                throw new ArgumentNullException("Response is Required.");
+
             var properties = GetObjectPropertyInfo<T>();
-
-            var excelName = this.ExcelName;
-
-            var list = new List<Table>();
 
             HtmlTable table = new HtmlTable();
             table.InitTable();
 
-            AddExcelTitle<T>(table, properties.Count());
+            AddExcelTitle<T>(properties.Count(), table);
 
             AddColumnGroup(properties, table);
 
             AddTableColumnHeader(properties, table);
 
-            if (listItems == null)
-            {
-                throw new ArgumentNullException("Excel list is Required.");
-            }
-
-            AddTableColumnCell(listItems, properties, table);
+            AddTableColumnCell(properties, table, listItems);
 
             table.EndTable();
 
-            if (Response == null)
-            {
-                throw new ArgumentNullException("Response is Required.");
-            }
-
             AddResponseHeader(Response);
+
             DownloadExcel(Response, table);
         }
 
@@ -72,7 +64,7 @@ namespace StormReport
             table.EndRow();
         }
 
-        private void AddExcelTitle<T>(HtmlTable table, int columnCount)
+        private void AddExcelTitle<T>(int columnCount, HtmlTable table)
         {
             if (!string.IsNullOrEmpty(this.ExcelTitle))
             {
@@ -82,7 +74,7 @@ namespace StormReport
             }
         }
 
-        private static void AddTableColumnCell<T>(IList<T> listItems, IEnumerable<PropertyInfo> properties, HtmlTable table)
+        private static void AddTableColumnCell<T>(IEnumerable<PropertyInfo> properties, HtmlTable table, IList<T> listItems)
         {
             foreach (var row in listItems.Select(o => new { Properties = properties.Select(g => g), Value = o }).ToList())
             {

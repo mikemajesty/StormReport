@@ -3,6 +3,7 @@ using System;
 
 namespace StormReport
 {
+    [AttributeUsage(AttributeTargets.Property)]
     public class ExportableAddtionalTextAttribute : Attribute
     {
         public string Description { get; set; }

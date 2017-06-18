@@ -2,6 +2,7 @@
 
 namespace StormReport
 {
+    [AttributeUsage(AttributeTargets.Property)]
     public class ExportableColumnGroupAttribute : Attribute
     {
         public string Description { get; set; }
