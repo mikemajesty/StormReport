@@ -11,12 +11,12 @@ using System.Web.UI;
 
 namespace StormReport
 {
-    public class TestWithreport
+    public class StormExcel
     {
         public string ExcelName { private get; set; }
         public string ExcelTitle { private get; set; }
 
-        public TestWithreport(string excelTitle, string excelName = "ExcelReport")
+        public StormExcel(string excelTitle, string excelName = "ExcelReport")
         {
             this.ExcelName = excelName;
             this.ExcelTitle = excelTitle;
@@ -67,10 +67,7 @@ namespace StormReport
             rows.TableSection = TableRowSection.TableHeader;
             StringBuilder style = new StringBuilder();
 
-            Array.ForEach(this.GetTitleStyles<T>(), s =>
-            {
-                style.Append(s.Contains(";") ? s : s + ";");
-            });
+            Array.ForEach(this.GetTitleStyles<T>(), s => style.Append(s.Contains(";") ? s : s + ";"));
 
             TableHeaderCell hcells = new TableHeaderCell();
             hcells.Text = this.ExcelTitle;
@@ -95,10 +92,7 @@ namespace StormReport
                 rows.Cells.Add(gcell);
                 StringBuilder styles = new StringBuilder();
 
-                Array.ForEach(propStyle.Styles, s =>
-                {
-                    styles.Append(s.Contains(";") ? s : s + ";");
-                });
+                Array.ForEach(propStyle.Styles, s => styles.Append(s.Contains(";") ? s : s + ";"));
 
                 gcell.Attributes.Add("style", styles.ToString());
             }
@@ -112,17 +106,14 @@ namespace StormReport
             foreach (var headerCell in properties)
             {
                 var headerText = ((ExportableColumnHeaderNameAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderNameAttribute), false).FirstOrDefault()).Description;
-                var styleProperty = ((ExportableColumnHeaderStyleAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderStyleAttribute), false).FirstOrDefault());
+                var propStyle = ((ExportableColumnHeaderStyleAttribute)headerCell.GetCustomAttributes(typeof(ExportableColumnHeaderStyleAttribute), false).FirstOrDefault());
 
                 TableHeaderCell hcell = new TableHeaderCell();
                 hcell.Text = headerText;
                 rows.Cells.Add(hcell);
                 StringBuilder styles = new StringBuilder();
 
-                Array.ForEach(styleProperty.Styles, s =>
-                {
-                    styles.Append(s.Contains(";") ? s : s + ";");
-                });
+                Array.ForEach(propStyle.Styles, s => styles.Append(s.Contains(";") ? s : s + ";"));
 
                 hcell.Attributes.Add("style", styles.ToString());
             }
@@ -138,16 +129,14 @@ namespace StormReport
                 foreach (PropertyInfo cell in row.Properties)
                 {
                     var cellValue = row.Properties.Select(g => cell.GetValue(row.Value)).FirstOrDefault();
-                    var styleProperty = ((ExportableColumnContentStyleAttribute)cell.GetCustomAttributes(typeof(ExportableColumnContentStyleAttribute), false).FirstOrDefault());
+                    var propStyle = ((ExportableColumnContentStyleAttribute)cell.GetCustomAttributes(typeof(ExportableColumnContentStyleAttribute), false).FirstOrDefault());
                     TableCell ccell = new TableCell();
                     ccell.Text = cellValue.ToString();
                     rows.Cells.Add(ccell);
                     StringBuilder styles = new StringBuilder();
 
-                    Array.ForEach(styleProperty.Styles, s =>
-                    {
-                        styles.Append(s.Contains(";") ? s : s + ";");
-                    });
+                    Array.ForEach(propStyle.Styles, s => styles.Append(s.Contains(";") ? s : s + ";"));
+
                     ccell.Attributes.Add("style", styles.ToString());
                 }
                 tb.Rows.Add(rows);
