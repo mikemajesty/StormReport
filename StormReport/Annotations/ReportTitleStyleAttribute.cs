@@ -3,11 +3,11 @@
 namespace StormReport
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class ExcelTitleStyleAttribute : Attribute
+    public class ReportTitleStyleAttribute : Attribute
     {
         public string[] Styles { get; set; }
 
-        public ExcelTitleStyleAttribute(params string[] styles)
+        public ReportTitleStyleAttribute(params string[] styles)
         {
             this.Styles = styles;
         }

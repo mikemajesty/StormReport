@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StormReport.Test
 {
-    [ExcelTitleStyle("background-color:powderblue;")]
+    [ReportTitleStyle("background-color:powderblue;")]
     public class ClassFinalTest
     {
         private List<ClassFinalTest> List;

@@ -34,7 +34,7 @@ namespace StormReport.BuildTable
             table.Append("    </tr>\n");
         }
 
-        public void AddExcelTitle(string title, int columnCount, string[] styles)
+        public void AddReportTitle(string title, int columnCount, string[] styles)
         {
             StringBuilder style = new StringBuilder();
 

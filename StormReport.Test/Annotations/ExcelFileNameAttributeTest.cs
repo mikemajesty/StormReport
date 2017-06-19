@@ -26,7 +26,7 @@ namespace StormReport.Test
         public void GenerateExcelWithoutAnnotationName()
         {
             List<ClassTestWithoutName> list = GetWithoutExcelNameList();
-            report.CreateExcelBase(list, response);
+            report.CreateExcel(list, response);
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace StormReport.Test
         {
 
             List<MockEmployeeTest> list = GetList();
-            report.CreateExcelBase(list, response);
+            report.CreateExcel(list, response);
         }
 
         private static List<MockEmployeeTest> GetList()

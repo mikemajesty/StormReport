@@ -2,7 +2,7 @@
 
 namespace StormReport.Test
 {
-    [ExcelTitleStyle("background-color:powderblue;")]
+    [ReportTitleStyle("background-color:powderblue;")]
     public class MockEmployeeTest
     {
         private List<MockEmployeeTest> List { get; set; }

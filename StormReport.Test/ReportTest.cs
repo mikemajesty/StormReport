@@ -27,20 +27,21 @@ namespace StormReport.Test
         public void ResponseIsNull()
         {
             List<MockEmployeeTest> list = GetList();
-            report.CreateExcelBase(list, null);
+            report.CreateExcel(list, null);
         }
 
         [TestMethod]
         public void GenerateReport()
         {
+            StormPdf pdf = new StormPdf();
             List<MockEmployeeTest> list = GetList();
-            report.CreateExcelBase(list, response);
+            pdf.CreatePdf(list, response);
         }
 
         [TestMethod]
         public void GenerateEmptyExcelRow()
         {
-            report.CreateExcelBase(new List<MockEmployeeTest>(), response);
+            report.CreateExcel(new List<MockEmployeeTest>(), response);
         }
 
         [TestMethod]
@@ -48,7 +49,7 @@ namespace StormReport.Test
         public void GenerateNullListObject()
         {
             List<MockEmployeeTest> list = null;
-            report.CreateExcelBase(list, response);
+            report.CreateExcel(list, response);
         }
 
         private static List<MockEmployeeTest> GetList()

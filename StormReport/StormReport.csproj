@@ -88,11 +88,12 @@
     <Compile Include="Annotations\ExportableAddtionalTextAttribute.cs" />
     <Compile Include="Model\AdditionalTextEnum.cs" />
     <Compile Include="Annotations\ExportableColumnGroupAttribute.cs" />
-    <Compile Include="Annotations\ExcelTitleStyleAttribute.cs" />
+    <Compile Include="Annotations\ReportTitleStyleAttribute.cs" />
     <Compile Include="Model\MockEmployee.cs" />
     <Compile Include="Annotations\ExportableColumnContentStyleAttribute.cs" />
     <Compile Include="Annotations\ExportableColumnHeaderNameAttribute.cs" />
     <Compile Include="Annotations\ExportableColumnHeaderStyleAttribute.cs" />
+    <Compile Include="Service\ReportService.cs" />
     <Compile Include="StormExcel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StormPdf.cs" />
