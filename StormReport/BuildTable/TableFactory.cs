@@ -3,11 +3,11 @@ using System.Text;
 
 namespace StormReport.BuildTable
 {
-    public class HtmlTable
+    public class TableFactory
     {
         private StringBuilder table;
 
-        public HtmlTable()
+        public TableFactory()
         {
             table = new StringBuilder();
         }

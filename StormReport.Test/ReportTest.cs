@@ -10,12 +10,12 @@ namespace StormReport.Test
     [TestClass]
     public class ReportTest
     {
-        private Report report;
+        private StormExcel report;
         private HttpResponseBase response;
 
         public ReportTest()
         {
-            report = new Report("Relatório de Cliente: " + DateTime.Now);
+            report = new StormExcel("Relatório de Cliente: " + DateTime.Now);
             response = Mock.Of<HttpResponseBase>();
 
             var textWriter = Mock.Of<TextWriter>();
