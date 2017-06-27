@@ -30,7 +30,7 @@ namespace StormReport.Service
                 table.AddRow();
                 foreach (PropertyInfo cell in row.Properties)
                 {
-                    var cellValue = row.Properties.Select(g => cell.GetValue(row.Value)).FirstOrDefault();
+                    var cellValue = row.Properties.Select(g => cell.GetValue(row.Value, null)).FirstOrDefault();
                     var styleProperty = ((ExportableColumnContentStyleAttribute)cell.GetCustomAttributes(typeof(ExportableColumnContentStyleAttribute), false).FirstOrDefault());
                     var addtionalText = ((ExportableAddtionalTextAttribute)cell.GetCustomAttributes(typeof(ExportableAddtionalTextAttribute), false).FirstOrDefault());
 
