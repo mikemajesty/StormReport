@@ -99,6 +99,8 @@ public ActionResult GenerateReport()
   return View();
 }
 
+excel: https://drive.google.com/file/d/0B3fZDB3QKwrlejJ5T0thVlBZY1E/view?usp=sharing
+pdf: https://drive.google.com/file/d/0B3fZDB3QKwrlTDk5NWQ0VkhmNzg/view?usp=sharing
 
 ```
 
