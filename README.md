@@ -1,10 +1,10 @@
 # Storm Report - Generate your reports in EXCEL and PDF using only Annotations in ASP NET MVC.
 
 # How to install
-```C#
- 
 ```
-
+ Install-Package StormReport
+```
+<hr>
 # How to use
 
 ### Your entity or DTO
