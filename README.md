@@ -113,6 +113,20 @@
 
 [![postimage.png](https://s22.postimg.org/ncbo4l5q9/postimage.png)](https://postimg.org/image/83lqqtc1p/)
 
+<hr>
+
+### Annotation description
+
+* **ReportTitleStyle**(optional): Formats the style of the report title.
+* **ExportableColumnHeaderName**(required): Column text.
+* **ExportableColumnHeaderStyle**(optional): Formats the style of the report header.
+* **ExportableColumnContentStyle**(optional): Formats the style of the report content.
+* **ExportableColumnGroup**(optional): Formats the column group of the report.
+* **ExportableColumnGroup(description: )**(optional): Column group text.
+* **ExportableColumnGroup(styles: )**(optional): Column group style.
+* **ExportableAddtionalText(description: )**(optional): Text to be added.
+* **ExportableAddtionalText(direction: )**(optional): Text Direction.
+
 ### Reports example
 
  **Excel**: 
