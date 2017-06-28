@@ -120,7 +120,9 @@
 ```
 #### Example
 
-[![postimage.png](https://s22.postimg.org/ncbo4l5q9/postimage.png)](https://postimg.org/image/83lqqtc1p/)
+[![postimage.png](https://s8.postimg.org/falwvemmd/postimage.png)](https://postimg.org/image/4ns3pzegx/)
+
+[![excel.png](https://s4.postimg.org/xmiqt09kd/excel.png)](https://postimg.org/image/ma65b80vd/)
 
 <hr>
 
