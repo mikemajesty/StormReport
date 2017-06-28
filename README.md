@@ -6,6 +6,8 @@
 ```
 
 # How to use
+
+### Your entity or DTO
 ```C#
  [ReportTitleStyle(styles: "text-align: center; padding: 5px 0px 5px 0px;")]
  public class MockCustomerTest
@@ -53,7 +55,7 @@
      }
  }
 ```
-
+### In your controller
 ```C#
 public ActionResult GenerateReport()
 {
@@ -106,7 +108,11 @@ pdf: https://drive.google.com/file/d/0B3fZDB3QKwrlTDk5NWQ0VkhmNzg/view?usp=shari
  mso-number-format:'\0022£\0022#,##0.00'	£12.76
  mso-number-format:'#,##0.00_ ;[Red]-#,##0.00\ ' 2 decimals, negative numbers in red and signed
 ```
+#### Example
 
+```C# 
+ [ExportableColumnContentStyle(styles: "mso-number-format:'0.000'")]
+```
 #### Used versions
 
 ##### C# 
