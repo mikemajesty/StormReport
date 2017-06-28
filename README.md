@@ -55,38 +55,39 @@
      }
  }
 ```
+
 ### In your controller
+
 ```C#
-public ActionResult GenerateReport()
-{
-   var customer1 = new MockCustomerTest
-   {
-       Cidade = "Ibiúna",
-       Estado = "SP",
-       Idade = 10,
-       Nome = "Mike"
-   };
-   var customer2 = new MockCustomerTest
-   {
-       Cidade = "Sorocaba",
-       Estado = "SP",
-       Idade = 28,
-       Nome = "Mike Lima"
-   };
-   var customerList = new List<MockCustomerTest>();
-   customerList.Add(customer1);
-   customerList.Add(customer2);
-   var rep = new StormExcel("Customer Description : " + DateTime.Now);
-   rep.CreateExcel(customerList, this.Response);
-   return View();
-}
+  public ActionResult GenerateReport()
+  {
+     var customer1 = new MockCustomerTest
+     {
+         Cidade = "Ibiúna",
+         Estado = "SP",
+         Idade = 10,
+         Nome = "Mike"
+     };
+     var customer2 = new MockCustomerTest
+     {
+         Cidade = "Sorocaba",
+         Estado = "SP",
+         Idade = 28,
+         Nome = "Mike Lima"
+     };
+     var customerList = new List<MockCustomerTest>();
+     customerList.Add(customer1);
+     customerList.Add(customer2);
+     var rep = new StormExcel("Customer Description : " + DateTime.Now);
+     rep.CreateExcel(customerList, this.Response);
+     return View();
+  }
 
-excel: https://drive.google.com/file/d/0B3fZDB3QKwrlejJ5T0thVlBZY1E/view?usp=sharing
-pdf: https://drive.google.com/file/d/0B3fZDB3QKwrlTDk5NWQ0VkhmNzg/view?usp=sharing
-
+  excel: https://drive.google.com/file/d/0B3fZDB3QKwrlejJ5T0thVlBZY1E/view?usp=sharing
+  pdf: https://drive.google.com/file/d/0B3fZDB3QKwrlTDk5NWQ0VkhmNzg/view?usp=sharing
 ```
-
 ### Excel column format type.
+
 ```Html
  mso-number-format:'0'	NO Decimals
  mso-number-format:'0.000'	3 Decimals
@@ -108,11 +109,13 @@ pdf: https://drive.google.com/file/d/0B3fZDB3QKwrlTDk5NWQ0VkhmNzg/view?usp=shari
  mso-number-format:'\0022£\0022#,##0.00'	£12.76
  mso-number-format:'#,##0.00_ ;[Red]-#,##0.00\ ' 2 decimals, negative numbers in red and signed
 ```
+
 #### Example
 
-```C# 
- [ExportableColumnContentStyle(styles: "mso-number-format:'0.000'")]
+```C#
+  [ExportableColumnContentStyle(styles: "mso-number-format:'0.000'")]
 ```
+
 #### Used versions
 
 ##### C# 
