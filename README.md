@@ -5,6 +5,7 @@
  Install-Package StormReport
 ```
 <hr>
+
 # How to use
 
 ### Your entity or DTO
