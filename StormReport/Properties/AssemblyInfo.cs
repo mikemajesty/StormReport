@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("StormReport")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Generate your reports in EXCEL and PDF using only Annotations in ASP NET MVC.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Mike Lima")]
 [assembly: AssemblyProduct("StormReport")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("Copyright ©  Mike Lima 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
