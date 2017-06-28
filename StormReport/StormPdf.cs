@@ -52,12 +52,13 @@ namespace StormReport
         private static void DownloadPdf(HttpResponseBase Response, MemoryStream mstream)
         {
             mstream.WriteTo(Response.OutputStream);
+            Response.ClearContent();
+            Response.Clear();
             Response.End();
         }
 
         private void AddResponseHeader(HttpResponseBase Response)
         {
-            Response.Clear();
             Response.ContentType = "application/pdf";
             Response.AddHeader("content-disposition", "attachment;filename=" + GetPdfName());
             Response.Buffer = true;

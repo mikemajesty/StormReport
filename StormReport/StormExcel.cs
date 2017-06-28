@@ -51,6 +51,7 @@ namespace StormReport
         {
             Response.Output.Write(table.ToHtml());
             Response.Flush();
+            Response.Clear();
             Response.End();
         }
 
