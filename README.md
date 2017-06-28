@@ -78,8 +78,15 @@
      var customerList = new List<MockCustomerTest>();
      customerList.Add(customer1);
      customerList.Add(customer2);
-     var rep = new StormExcel("Customer Description : " + DateTime.Now);
+     //Excel start
+     var rep = new StormExcel(excelTitle: "Customer Description", excelName: string.Format("ExcelCustomerReport-{0}", DateTime.Now));
      rep.CreateExcel(customerList, this.Response);
+     //Excel end
+      
+     //PDF start
+     var rep = new StormPdf(pdfTitle: "Customer Description", pdfName: string.Format("ExcelCustomerReport-{0}", DateTime.Now));
+     rep.CreatePdf(customerList, this.Response);
+     //pdf end
      return View();
   }
 
