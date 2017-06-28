@@ -84,9 +84,11 @@
   }
 
 ```
+<hr>
+
 ### Excel column format type.
 
-```HTML
+```css
   mso-number-format:'0'	NO Decimals
   mso-number-format:'0.000'	3 Decimals
   mso-number-format:'#,##0.000'	Comma with 3 dec
@@ -107,12 +109,9 @@
   mso-number-format:'\0022£\0022#,##0.00'	£12.76
   mso-number-format:'#,##0.00_ ;[Red]-#,##0.00\ ' 2 decimals, negative numbers in red and signed
 ```
-
 #### Example
 
-```C#
-  [ExportableColumnContentStyle(styles: "mso-number-format:'0.000'")]
-```
+[![postimage.png](https://s22.postimg.org/ncbo4l5q9/postimage.png)](https://postimg.org/image/83lqqtc1p/)
 
 ### Reports example
 
