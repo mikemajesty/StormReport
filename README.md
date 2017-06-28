@@ -114,6 +114,14 @@
   [ExportableColumnContentStyle(styles: "mso-number-format:'0.000'")]
 ```
 
+### Reports example
+
+ **Excel**: 
+ [link to Excel!](https://drive.google.com/file/d/0B3fZDB3QKwrlejJ5T0thVlBZY1E/view?usp=sharing)
+  
+ **PDF**: 
+ [link to PDF!](https://drive.google.com/file/d/0B3fZDB3QKwrlTDk5NWQ0VkhmNzg/view?usp=sharing)
+
 #### Used versions
 
 ##### C# 
