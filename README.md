@@ -150,9 +150,7 @@
  
  [![pdf.png](https://s18.postimg.org/91qas1vbd/pdf.png)](https://postimg.org/image/3qbe7c98l/)
 
-#### Used versions
-
-##### C# 
+#### C# target
 version: `4.0`
 <hr>
 
