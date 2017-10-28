@@ -9,7 +9,7 @@
 
 # How to use
 
-### Your entity or DTO
+### Entity or DTO
 ```C#
  [ReportTitleStyle(styles: "text-align: center; padding: 5px 0px 5px 0px;")]
  public class MockCustomerTest
@@ -58,7 +58,7 @@
  }
 ```
 
-### In your controller
+### Controller
 
 ```C#
   public ActionResult GenerateReport()
@@ -136,7 +136,7 @@
 * **ExportableColumnGroup**(optional): Formats the column group of the report.
 * **ExportableColumnGroup(description: )**(optional): Column group text.
 * **ExportableColumnGroup(styles: )**(optional): Column group style.
-* **ExportableAddtionalText(description: )**(optional): Text to be added.
+* **ExportableAddtionalText(description: )**(optional): Aditional description
 * **ExportableAddtionalText(direction: )**(optional): Text Direction.
 
 ### Reports example
