@@ -1,4 +1,4 @@
-# Storm Report - Generate your reports in EXCEL and PDF using only Annotations in ASP NET MVC.  [![storm.png](https://s18.postimg.org/fdfq8n7ax/storm.png)](https://postimg.org/image/xg8szv35h/)
+# Storm Report - Generate your reports in EXCEL and PDF using only Annotations in ASP NET MVC.
 
 # How to install
 ```
