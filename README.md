@@ -138,13 +138,9 @@
 
  **Excel**: 
  [link to Excel!](https://drive.google.com/file/d/0B3fZDB3QKwrlejJ5T0thVlBZY1E/view?usp=sharing)
- 
- [![excel.png](https://s15.postimg.org/bdfp30zyj/excel.png)](https://postimg.org/image/k8gjdjoqv/)
   
  **PDF**: 
  [link to PDF!](https://drive.google.com/file/d/0B3fZDB3QKwrlTDk5NWQ0VkhmNzg/view?usp=sharing)
- 
- [![pdf.png](https://s18.postimg.org/91qas1vbd/pdf.png)](https://postimg.org/image/3qbe7c98l/)
 
 #### C# target
 version: `4.0`
